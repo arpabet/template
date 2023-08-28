@@ -12,6 +12,10 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/codeallergy/glue"
+	"github.com/sprintframework/certmod"
+	"github.com/sprintframework/dnsmod"
+	"github.com/sprintframework/natmod"
+	"github.com/sprintframework/sealmod"
 	"github.com/sprintframework/template/pkg/assets"
 	"github.com/sprintframework/template/pkg/assetsgz"
 	"github.com/sprintframework/template/pkg/client"
@@ -71,6 +75,10 @@ func doMain() (err error) {
 		app.WithBuild(Build),
 		app.Beans(app.DefaultApplicationBeans, sprintcmd.DefaultCommands, AppAssets, AppGzipAssets, AppResources, cmd.Commands),
 		app.Core(sprintcore.CoreScanner(
+			natmod.Scanner(),
+			dnsmod.Scanner(),
+			sealmod.Scanner(),
+			certmod.Scanner(),
 			sprintcore.BadgerStorageFactory("config-storage"),
 			sprintcore.BadgerStorageFactory("host-storage"),
 			sprintcore.LumberjackFactory(),
