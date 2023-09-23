@@ -6,10 +6,12 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 	"github.com/codeallergy/glue"
 	"github.com/sprintframework/template/pkg/api"
 	"github.com/sprintframework/sprint"
+	"strings"
 )
 
 type implAdminCommand struct {
@@ -22,17 +24,35 @@ func AdminCommand() sprint.Command {
 	return &implAdminCommand{}
 }
 
+func (t *implAdminCommand) Help() string {
+	helpText := `
+Usage: ./%s resources [command]
+
+	Provides management functionality over resources.
+
+Commands:
+
+  list                 List admins.
+
+  add                  Add admin.
+
+  remove               Remove admin.
+
+`
+	return strings.TrimSpace(fmt.Sprintf(helpText, t.Application.Executable()))
+}
+
 func (t *implAdminCommand) BeanName() string {
 	return "admin"
 }
 
-func (t *implAdminCommand) Desc() string {
+func (t *implAdminCommand) Synopsis() string {
 	return "admin commands: [list, add, remove]"
 }
 
 func (t *implAdminCommand) Run(args []string) error {
 	if len(args) == 0 {
-		return errors.Errorf("admin command needs argument, %s", t.Desc())
+		return errors.Errorf("invalid argument, %s", t.Synopsis())
 	}
 	cmd := args[0]
 	args = args[1:]

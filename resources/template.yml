@@ -6,20 +6,20 @@ application:
   autoupdate: "on"
   bootstrap-tokens: "boot"
 
-config-storage:
+config-store:
   split-key-value: false
 
-host-storage:
+host-store:
   split-key-value: true
 
 webapp:
   name: "PreCook Template"
 
 control-grpc-server:
-  listen-address: "127.0.0.1:8444"
+  bind-address: "127.0.0.1:8444"
 
 control-gateway-server:
-  listen-address: ":8443"
+  bind-address: ":8443"
   options: "gateway;pages;assets"
   use-proto-names: true
 

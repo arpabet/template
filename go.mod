@@ -10,12 +10,12 @@ require (
 	github.com/keyvalstore/badgerstore v1.3.0
 	github.com/keyvalstore/store v1.3.0
 	github.com/pkg/errors v0.9.1
-	github.com/sprintframework/certmod v1.0.0
+	github.com/sprintframework/certmod v1.0.1
 	github.com/sprintframework/dnsmod v1.0.0
 	github.com/sprintframework/natmod v1.0.1
 	github.com/sprintframework/sealmod v1.0.0
-	github.com/sprintframework/sprint v1.3.0
-	github.com/sprintframework/sprintframework v1.3.0
+	github.com/sprintframework/sprint v1.3.8
+	github.com/sprintframework/sprintframework v1.3.8-3
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.24.0
@@ -38,6 +38,7 @@ require (
 	github.com/dgraph-io/badger/v3 v3.2103.5 // indirect
 	github.com/dgraph-io/ristretto v0.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-acme/lego/v4 v4.8.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -50,14 +51,18 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
+	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/huin/goupnp v1.2.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/keyvalstore/bboltstore v1.3.0 // indirect
 	github.com/keyvalstore/boltstore v1.3.0 // indirect
 	github.com/keyvalstore/cachestore v1.3.0 // indirect
 	github.com/klauspost/compress v1.16.0 // indirect
 	github.com/likexian/whois v1.14.2 // indirect
 	github.com/mailgun/mailgun-go/v4 v4.8.1 // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/miekg/dns v1.1.50 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -69,6 +74,7 @@ require (
 	github.com/sprintframework/nat v1.0.0 // indirect
 	github.com/sprintframework/seal v1.0.0 // indirect
 	github.com/sprintframework/sprintpb v1.3.0 // indirect
+	go.etcd.io/bbolt v1.3.7 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect

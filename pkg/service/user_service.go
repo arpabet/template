@@ -24,8 +24,8 @@ import (
 type implUserService  struct {
 	Log                *zap.Logger              `inject`
 	ConfigRepository   sprint.ConfigRepository  `inject`
-	HostStorage        store.ManagedDataStore         `inject:"bean=host-storage"`
-	TransactionalManager  store.TransactionalManager  `inject:"bean=host-storage"`
+	HostStorage        store.ManagedDataStore         `inject:"bean=host-store"`
+	TransactionalManager  store.TransactionalManager  `inject:"bean=host-store"`
 
 	UserSaltKey      string   `value:"user-service.salt-key,default="`
 	InitialUserId    int      `value:"user-service.initial-id,default=27483984961"`  // u00001

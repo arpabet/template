@@ -20,8 +20,8 @@ import (
 
 type implSecurityLogService struct {
 	Log            *zap.Logger          `inject`
-	HostStorage    store.DataStore      `inject:"bean=host-storage"`
-	TransactionalManager  store.TransactionalManager  `inject:"bean=host-storage"`
+	HostStorage    store.DataStore      `inject:"bean=host-store"`
+	TransactionalManager  store.TransactionalManager  `inject:"bean=host-store"`
 
 	LogTtl   int   `value:"security-log.ttl,default=31536000"`  // one year ttl
 }

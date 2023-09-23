@@ -42,7 +42,7 @@ type implUIGrpcServer struct {
 	UIGatewayServer  *http.Server   `inject:"bean=control-gateway-server"`
 
 	ControlTls     bool     `value:"control-grpc-server.tls,default=false"`
-	GrpcAddress    string   `value:"control-grpc-server.listen-address,default="`
+	GrpcAddress    string   `value:"control-grpc-server.bind-address,default="`
 
 	Properties            glue.Properties    `inject`
 	AuthorizationMiddleware sprint.AuthorizationMiddleware `inject`
@@ -52,7 +52,7 @@ type implUIGrpcServer struct {
 	UserService           api.UserService   `inject`
 	SecurityLogService    api.SecurityLogService  `inject`
 	PageService           api.PageService   `inject`
-	TransactionalManager  store.TransactionalManager  `inject:"bean=host-storage"`
+	TransactionalManager  store.TransactionalManager  `inject:"bean=host-store"`
 
 	Log             *zap.Logger          `inject`
 
@@ -97,7 +97,7 @@ func (t *implUIGrpcServer) PostConstruct() (err error) {
 	opts = append(opts, grpc.WithTransportCredentials(tlsCredentials))
 
 	if t.GrpcAddress == "" {
-		return errors.New("property 'control-grpc-server.listen-address' is empty")
+		return errors.New("property 'control-grpc-server.bind-address' is empty")
 	}
 
 	pb.RegisterAuthServiceHandlerFromEndpoint(context.Background(), api, t.GrpcAddress, opts)

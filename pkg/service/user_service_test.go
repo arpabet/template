@@ -27,19 +27,19 @@ func TestUserCRUID(t *testing.T) {
 	log, err := zap.NewDevelopment()
 	require.NoError(t, err)
 
-	configDir, err := os.MkdirTemp(os.TempDir(), "config-storage-test")
+	configDir, err := os.MkdirTemp(os.TempDir(), "config-store-test")
 	require.NoError(t, err)
 	defer os.RemoveAll(configDir)
 
-	configStore, err := badgerstore.New("config-storage", configDir)
+	configStore, err := badgerstore.New("config-store", configDir)
 	require.NoError(t, err)
 	defer configStore.Destroy()
 
-	hostDir, err := os.MkdirTemp(os.TempDir(), "host-storage-test")
+	hostDir, err := os.MkdirTemp(os.TempDir(), "host-store-test")
 	require.NoError(t, err)
 	defer os.RemoveAll(hostDir)
 
-	hostStore, err := badgerstore.New("host-storage", hostDir)
+	hostStore, err := badgerstore.New("host-store", hostDir)
 	require.NoError(t, err)
 	defer hostStore.Destroy()
 
