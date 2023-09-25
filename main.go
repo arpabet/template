@@ -16,6 +16,7 @@ import (
 	"github.com/sprintframework/dnsmod"
 	"github.com/sprintframework/natmod"
 	"github.com/sprintframework/sealmod"
+	"github.com/sprintframework/sprint"
 	"github.com/sprintframework/template/pkg/assets"
 	"github.com/sprintframework/template/pkg/assetsgz"
 	"github.com/sprintframework/template/pkg/client"
@@ -70,11 +71,12 @@ func doMain() (err error) {
 		}
 	}()
 
-	return app.Application("template",
-		app.WithVersion(Version),
-		app.WithBuild(Build),
-		app.Beans(app.DefaultApplicationBeans, sprintcmd.DefaultCommands, AppAssets, AppGzipAssets, AppResources, cmd.Commands),
-		app.Core(sprintcore.CoreScanner(
+	beans := []interface{} {
+		app.ApplicationScanner(
+			sprintcmd.DefaultCommands, AppAssets, AppGzipAssets, AppResources, cmd.Commands),
+
+		glue.Child(sprint.CoreRole,
+			sprintcore.CoreScanner(),
 			natmod.Scanner(),
 			dnsmod.Scanner(),
 			sealmod.Scanner(),
@@ -86,20 +88,28 @@ func doMain() (err error) {
 			service.UserService(),
 			service.SecurityLogService(),
 			service.PageService(),
-		)),
-		app.Server(sprintserver.ServerScanner(
-			sprintserver.AuthorizationMiddleware(),
-			sprintserver.GrpcServerFactory("control-grpc-server"),
-			sprintserver.ControlServer(),
-			server.UIGrpcServer(),
-			sprintserver.HttpServerFactory("control-gateway-server"),
-			sprintserver.TlsConfigFactory("tls-config"),
-		)),
-		app.Client(sprintclient.ControlClientScanner(
+
+			glue.Child(sprint.ServerRole,
+				sprintserver.GrpcServerScanner("control-grpc-server"),
+				sprintserver.ControlServer(),
+				server.UIGrpcServer(),
+				sprintserver.HttpServerFactory("control-gateway-server"),
+				sprintserver.TlsConfigFactory("tls-config"),
+			),
+
+		),
+		glue.Child(sprint.ControlClientRole,
+			sprintclient.ControlClientScanner(),
 			sprintclient.AnyTlsConfigFactory("tls-config"),
 			client.AdminClient(),
-		)),
-	).Run(os.Args[1:])
+		),
+	}
+
+	return app.Application("template",
+		app.WithVersion(Version),
+		app.WithBuild(Build),
+		app.WithBeans(beans)).
+		Run(os.Args[1:])
 
 }
 
