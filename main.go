@@ -10,13 +10,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/codeallergy/glue"
 	"github.com/sprintframework/certmod"
 	"github.com/sprintframework/dnsmod"
 	"github.com/sprintframework/natmod"
 	"github.com/sprintframework/sealmod"
 	"github.com/sprintframework/sprint"
+	"github.com/sprintframework/sprintframework/sprintutils"
 	"github.com/sprintframework/template/pkg/assets"
 	"github.com/sprintframework/template/pkg/assetsgz"
 	"github.com/sprintframework/template/pkg/client"
@@ -58,18 +58,7 @@ var AppResources = &glue.ResourceSource{
 
 func doMain() (err error) {
 
-	defer func() {
-		if r := recover(); r != nil {
-			switch v := r.(type) {
-			case error:
-				err = v
-			case string:
-				err = errors.New(v)
-			default:
-				err = errors.Errorf("%v", v)
-			}
-		}
-	}()
+	sprintutils.PanicToError(&err)
 
 	beans := []interface{} {
 		sprintapp.ApplicationBeans,
