@@ -72,11 +72,16 @@ func doMain() (err error) {
 	}()
 
 	beans := []interface{} {
-		sprintapp.ApplicationScanner(
-			sprintcmd.DefaultCommands, AppAssets, AppGzipAssets, AppResources, cmd.Commands),
+		sprintapp.ApplicationBeans,
+		sprintcmd.ApplicationCommands,
+		cmd.Commands,
+
+		AppAssets,
+		AppGzipAssets,
+		AppResources,
 
 		glue.Child(sprint.CoreRole,
-			sprintcore.CoreScanner(),
+			sprintcore.CoreServices,
 			natmod.Scanner(),
 			dnsmod.Scanner(),
 			sealmod.Scanner(),
@@ -99,7 +104,7 @@ func doMain() (err error) {
 
 		),
 		glue.Child(sprint.ControlClientRole,
-			sprintclient.ControlClientScanner(),
+			sprintclient.ControlClientBeans,
 			sprintclient.AnyTlsConfigFactory("tls-config"),
 			client.AdminClient(),
 		),
