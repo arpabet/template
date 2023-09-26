@@ -10,10 +10,10 @@ require (
 	github.com/keyvalstore/badgerstore v1.3.0
 	github.com/keyvalstore/store v1.3.0
 	github.com/pkg/errors v0.9.1
-	github.com/sprintframework/certmod v1.0.1
-	github.com/sprintframework/dnsmod v1.0.0
-	github.com/sprintframework/natmod v1.0.1
-	github.com/sprintframework/sealmod v1.0.0
+	github.com/sprintframework/certmod v1.0.2
+	github.com/sprintframework/dnsmod v1.0.2
+	github.com/sprintframework/natmod v1.0.2
+	github.com/sprintframework/sealmod v1.0.2
 	github.com/sprintframework/sprint v1.3.14
 	github.com/sprintframework/sprintframework v1.3.14
 	github.com/stretchr/testify v1.8.4
@@ -68,11 +68,11 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sprintframework/cert v1.0.0 // indirect
+	github.com/sprintframework/cert v1.0.2 // indirect
 	github.com/sprintframework/certpb v1.0.0 // indirect
-	github.com/sprintframework/dns v1.0.0 // indirect
-	github.com/sprintframework/nat v1.0.0 // indirect
-	github.com/sprintframework/seal v1.0.0 // indirect
+	github.com/sprintframework/dns v1.0.2 // indirect
+	github.com/sprintframework/nat v1.0.2 // indirect
+	github.com/sprintframework/seal v1.0.2 // indirect
 	github.com/sprintframework/sprintpb v1.3.0 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	go.opencensus.io v0.24.0 // indirect
