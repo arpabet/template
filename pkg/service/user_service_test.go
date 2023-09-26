@@ -14,7 +14,7 @@ import (
 	"github.com/sprintframework/template/pkg/api"
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprintframework/pkg/core"
+	"github.com/sprintframework/sprintframework/sprintcore"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 	"os"
@@ -45,7 +45,7 @@ func TestUserCRUID(t *testing.T) {
 
 	userService := service.UserService()
 
-	ctx, err := glue.New(log, configStore, core.ConfigRepository(1000), hostStore, userService)
+	ctx, err := glue.New(log, configStore, sprintcore.ConfigRepository(1000), hostStore, userService)
 	require.NoError(t, err)
 	defer ctx.Close()
 

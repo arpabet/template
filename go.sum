@@ -1137,11 +1137,11 @@ github.com/sprintframework/seal v1.0.0/go.mod h1:l5w6ahKXw86mhVadamzE9wdse+ewInx
 github.com/sprintframework/sealmod v1.0.0 h1:ePWvnRY/nk/aOj0y7f/KyT1ri7lLWnVhDzvRTOMxG7I=
 github.com/sprintframework/sealmod v1.0.0/go.mod h1:UgfvU896zYChGLGt22+UfjTZPvcYy6+jyl7NuC2X7po=
 github.com/sprintframework/sprint v1.3.0/go.mod h1:ssu7bTol76CG/yAEa2kDU990+4j3kNTCsGvowbIo6+I=
-github.com/sprintframework/sprint v1.3.10/go.mod h1:duTzTG0yoNqObH8N+ppDy5baVIENbQ+ZhvPuzfbfjtM=
+github.com/sprintframework/sprint v1.3.11/go.mod h1:duTzTG0yoNqObH8N+ppDy5baVIENbQ+ZhvPuzfbfjtM=
 github.com/sprintframework/sprint v1.3.12 h1:nlgekJTT6aaXwg1bu7AjTDlTIzb/0pS41ybI1uQ/6ZM=
 github.com/sprintframework/sprint v1.3.12/go.mod h1:duTzTG0yoNqObH8N+ppDy5baVIENbQ+ZhvPuzfbfjtM=
-github.com/sprintframework/sprintframework v1.3.10 h1:mJ3rrGmn9GahHcFWNqwG0nBDwBYSmRtosXfLQH0f0nk=
-github.com/sprintframework/sprintframework v1.3.10/go.mod h1:Bo1uzRsmAvCUyL3SmfZsESYbGN3aU8HLHzHw4tdbZXk=
+github.com/sprintframework/sprintframework v1.3.12 h1:o9Qw8fzuHOe+VYDMZTB7Gd8GmdSJkK77HiTZpItMM/A=
+github.com/sprintframework/sprintframework v1.3.12/go.mod h1:m08p9VniTzHiOrDffOyfdTltWMpJi2WMOqXB2rl9qD8=
 github.com/sprintframework/sprintpb v1.3.0 h1:QVdhSOprZWwgXhu9aBiNHBlnl42SflaU+MX5e24+yKo=
 github.com/sprintframework/sprintpb v1.3.0/go.mod h1:Cuk1DcfvNYTjWJ2xqutDZmRmhwN+FRrAYGkV5dT8mio=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

@@ -14,7 +14,7 @@ import (
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/utils"
 	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/pkg/util"
+	"github.com/sprintframework/sprintframework/sprintutils"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
 	"strings"
@@ -37,7 +37,7 @@ func UserService() api.UserService {
 
 func (t *implUserService) PostConstruct() (err error) {
 	if t.UserSaltKey == "" {
-		t.UserSaltKey, err = util.GenerateToken()
+		t.UserSaltKey, err = sprintutils.GenerateToken()
 		if err != nil {
 			return errors.Errorf("generate token error, %v", err)
 		}
@@ -131,7 +131,7 @@ func (t *implUserService) GenerateUserId(ctx context.Context) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		id := util.EncodeId(uint64(num))
+		id := sprintutils.EncodeId(uint64(num))
 		value, err := t.HostStorage.Get(ctx).ByKey("user:%s", id).ToString()
 		if err != nil {
 			return "", err

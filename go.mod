@@ -15,7 +15,7 @@ require (
 	github.com/sprintframework/natmod v1.0.1
 	github.com/sprintframework/sealmod v1.0.0
 	github.com/sprintframework/sprint v1.3.12
-	github.com/sprintframework/sprintframework v1.3.10
+	github.com/sprintframework/sprintframework v1.3.12
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.24.0

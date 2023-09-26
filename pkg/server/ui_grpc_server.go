@@ -17,7 +17,7 @@ import (
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/service"
 	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/pkg/util"
+	"github.com/sprintframework/sprintframework/sprintutils"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -77,7 +77,7 @@ func (t *implUIGrpcServer) PostConstruct() (err error) {
 	pb.RegisterSiteServiceServer(t.GrpcServer, t)
 	pb.RegisterAdminServiceServer(t.GrpcServer, t) // no gateway
 
-	api, err := util.FindGatewayHandler(t.UIGatewayServer, "/api/")
+	api, err := sprintutils.FindGatewayHandler(t.UIGatewayServer, "/api/")
 	if err != nil {
 		return err
 	}

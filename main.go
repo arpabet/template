@@ -24,11 +24,11 @@ import (
 	"github.com/sprintframework/template/pkg/resources"
 	"github.com/sprintframework/template/pkg/server"
 	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprintframework/pkg/app"
-	sprintclient "github.com/sprintframework/sprintframework/pkg/client"
-	sprintcmd "github.com/sprintframework/sprintframework/pkg/cmd"
-	sprintcore "github.com/sprintframework/sprintframework/pkg/core"
-	sprintserver "github.com/sprintframework/sprintframework/pkg/server"
+	"github.com/sprintframework/sprintframework/sprintapp"
+	"github.com/sprintframework/sprintframework/sprintclient"
+	"github.com/sprintframework/sprintframework/sprintcmd"
+	"github.com/sprintframework/sprintframework/sprintcore"
+	"github.com/sprintframework/sprintframework/sprintserver"
 	"os"
 	"time"
 )
@@ -72,7 +72,7 @@ func doMain() (err error) {
 	}()
 
 	beans := []interface{} {
-		app.ApplicationScanner(
+		sprintapp.ApplicationScanner(
 			sprintcmd.DefaultCommands, AppAssets, AppGzipAssets, AppResources, cmd.Commands),
 
 		glue.Child(sprint.CoreRole,
@@ -105,10 +105,10 @@ func doMain() (err error) {
 		),
 	}
 
-	return app.Application("template",
-		app.WithVersion(Version),
-		app.WithBuild(Build),
-		app.WithBeans(beans)).
+	return sprintapp.Application("template",
+		sprintapp.WithVersion(Version),
+		sprintapp.WithBuild(Build),
+		sprintapp.WithBeans(beans)).
 		Run(os.Args[1:])
 
 }
