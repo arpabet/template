@@ -10,14 +10,14 @@
           <form method="post" @submit.prevent="restore">
 
             <div class="field">
-              <label class="label required">Email</label>
+              <label class="label required">Login</label>
 
               <div class="control">
                 <input
-                  v-model="email"
-                  type="email"
+                  v-model="username"
+                  type="text"
                   class="input"
-                  name="email"
+                  name="username"
                   required
                 >
               </div>
@@ -50,7 +50,7 @@
 
     data() {
       return {
-        email: '',
+        username: '',
         error: null,
       };
     },
@@ -59,9 +59,9 @@
       async restore() {
         try {
           await this.$axios.post('/api/auth/restore', {
-            email: this.email,
+            login: this.username,
           });
-          this.$router.push ({path: '/auth/reset_password', query: {email: this.email}})
+          this.$router.push ({path: '/auth/reset_password', query: {username: this.username}})
         } catch (e) {
           this.error = e.response.data.message;
         }

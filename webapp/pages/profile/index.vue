@@ -9,6 +9,10 @@
           {{ loggedInUser.user_id }}
         </p>
         <p>
+          <strong>Username:</strong>
+          {{ loggedInUser.username }}
+        </p>
+        <p>
           <strong>First Name:</strong>
           {{ loggedInUser.first_name }}
         </p>

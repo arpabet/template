@@ -187,6 +187,7 @@ func (t *implUIGrpcServer) AdminUserScan(ctx context.Context, req *pb.AdminScanR
 			items = append(items, &pb.UserItem{
 				Position:     int32(total + 1),
 				Id:           user.UserId,
+				Username:     user.Username,
 				Email:        user.Email,
 				FullName:     getFullName(user),
 				Role:         user.Role.String(),
@@ -223,6 +224,7 @@ func (t *implUIGrpcServer) AdminGetUser(ctx context.Context, req *pb.UserId) (*p
 
 	return &pb.AdminUser{
 		Id:        user.UserId,
+		Username:  user.Username,
 		Email:     user.Email,
 		FullName:  getFullName(user),
 		CreatedAt: user.CreTimestamp,
@@ -304,7 +306,7 @@ func (t *implUIGrpcServer) AdminRun(ctx context.Context, req *pb.Command)  (*pb.
 		var out strings.Builder
 		err := t.UserService.EnumUsers(ctx, func(user *pb.UserEntity) bool {
 			if user.Role == pb.UserRole_ADMIN {
-				out.WriteString(fmt.Sprintf("%s, %s, ADMIN\n", user.Email, getFullName(user)))
+				out.WriteString(fmt.Sprintf("%s, %s, %s, ADMIN\n", user.Username, user.Email, getFullName(user)))
 			}
 			return true
 		})
@@ -322,9 +324,9 @@ func (t *implUIGrpcServer) setUserRole(ctx context.Context, req *pb.Command, rol
 	if len(req.Args) == 0 {
 		return nil, status.Errorf(codes.InvalidArgument, "command needs email argument")
 	}
-	email := req.Args[0]
+	login := req.Args[0]
 
-	userId, err := t.UserService.GetUserIdByEmail(ctx, email)
+	userId, err := t.UserService.GetUserIdByLogin(ctx, login)
 	if err != nil {
 		return nil, err
 	}
@@ -334,10 +336,10 @@ func (t *implUIGrpcServer) setUserRole(ctx context.Context, req *pb.Command, rol
 		return nil
 	})
 	if err == service.ErrUserNotFound {
-		return nil, status.Errorf(codes.NotFound, "user '%s' not found", email)
+		return nil, status.Errorf(codes.NotFound, "user '%s' not found", login)
 	}
 	if err != nil {
-		return nil, t.wrapError(err, "setUserRole", email)
+		return nil, t.wrapError(err, "setUserRole", login)
 	}
 
 	return &pb.CommandResult{Content: "OK"}, nil

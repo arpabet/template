@@ -36,19 +36,27 @@ func NormalizeUserId(userId string) string {
 	return out.String()
 }
 
-func NormalizeEmail(email string) string {
-	s := strings.TrimSpace(email)
+func NormalizeLogin(login string) string {
+	s := strings.TrimSpace(login)
 	s = strings.ToLower(s)
 	return strings.ReplaceAll(s, ":", "")
 }
 
-func NormalizeField(email string) string {
-	s := strings.TrimSpace(email)
+func NormalizeEmail(email string) string {
+	return NormalizeLogin(email)
+}
+
+func NormalizeUsername(username string) string {
+	return NormalizeLogin(username)
+}
+
+func NormalizeField(field string) string {
+	s := strings.TrimSpace(field)
 	return strings.ReplaceAll(s, ":", "")
 }
 
-func NormalizeCode(email string) string {
-	s := strings.TrimSpace(email)
+func NormalizeCode(code string) string {
+	s := strings.TrimSpace(code)
 	return strings.ReplaceAll(s, ":", "")
 }
 

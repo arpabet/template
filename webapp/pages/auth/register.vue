@@ -10,6 +10,19 @@
           <form method="post" @submit.prevent="register">
 
             <div class="field">
+              <label class="label required">Username</label>
+
+              <div class="control">
+                <input
+                  v-model="username"
+                  type="text"
+                  class="input"
+                  name="username"
+                />
+              </div>
+            </div>
+
+            <div class="field">
               <label class="label required">First Name</label>
 
               <div class="control">
@@ -118,6 +131,7 @@
 
     data() {
       return {
+        username: '',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -133,6 +147,7 @@
       async register() {
         try {
           await this.$axios.post('/api/auth/register', {
+            username: this.username,
             first_name: this.firstName,
             middle_name: this.middleName,
             last_name: this.lastName,
@@ -142,7 +157,7 @@
 
           await this.$auth.loginWith('local', {
             data: {
-              email: this.email,
+              login: this.username,
               password: this.password,
             },
           });

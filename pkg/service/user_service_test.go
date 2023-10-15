@@ -59,6 +59,7 @@ func verifyUserCRUID(t *testing.T, userService api.UserService) {
 	ctx := context.Background()
 
 	user, err := userService.CreateUser(ctx, &pb.RegisterRequest{
+		Username: "test",
 		FirstName: "Test",
 		LastName: "T",
 		Email: "test@test.com",
@@ -117,6 +118,7 @@ func verifyUserTransactional(t *testing.T, userService api.UserService, transact
 	ctx := context.Background()
 
 	user, err := userService.CreateUser(ctx, &pb.RegisterRequest{
+		Username: "test",
 		FirstName: "Test",
 		LastName: "T",
 		Email: "test@test.com",

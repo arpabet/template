@@ -8,16 +8,15 @@ package service
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/keyvalstore/store"
+	"github.com/pkg/errors"
+	"github.com/sprintframework/sprint"
+	"github.com/sprintframework/sprintframework/sprintutils"
 	"github.com/sprintframework/template/pkg/api"
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/utils"
-	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/sprintutils"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
-	"strings"
 	"time"
 )
 
@@ -48,6 +47,11 @@ func (t *implUserService) PostConstruct() (err error) {
 }
 
 func (t *implUserService) CreateUser(ctx context.Context, req *pb.RegisterRequest) (user *pb.UserEntity, err error) {
+
+	req.Username = utils.NormalizeUsername(req.Username)
+	if req.Username == "" {
+		return nil, errors.New("username is empty")
+	}
 
 	req.Email = utils.NormalizeEmail(req.Email)
 	if req.Email == "" {
@@ -91,6 +95,7 @@ func (t *implUserService) CreateUser(ctx context.Context, req *pb.RegisterReques
 
 	user = &pb.UserEntity{
 		UserId:    userId,
+		Username:  req.Username,
 		FirstName: req.FirstName,
 		MiddleName: req.MiddleName,
 		LastName: req.LastName,
@@ -110,6 +115,9 @@ func (t *implUserService) CreateUser(ctx context.Context, req *pb.RegisterReques
 	if err != nil {
 		return nil, err
 	}
+
+	// username index
+	err = t.HostStorage.Set(ctx).ByKey("username:%s", req.Username).String(userId)
 
 	// email index
 	err = t.HostStorage.Set(ctx).ByKey("email:%s", req.Email).String(userId)
@@ -142,27 +150,13 @@ func (t *implUserService) GenerateUserId(ctx context.Context) (string, error) {
 	}
 }
 
-func (t *implUserService) ResetPassword(ctx context.Context, email string, newPassword string) (string, error) {
-
-	email = utils.NormalizeEmail(email)
-	if email == "" {
-		return "", errors.New("user email is empty")
-	}
-
-	userId, err := t.HostStorage.Get(ctx).ByKey("email:%s", email).ToString()
-	if err != nil {
-		return "", err
-	}
-
-	if userId == "" {
-		return "", ErrUserNotFound
-	}
+func (t *implUserService) ResetPassword(ctx context.Context, userId string, newPassword string) (email string, err error) {
 
 	if newPassword == "" {
 		return "", errors.New("new password is empty")
 	}
 
-	return userId, t.DoWithUser(ctx, userId, func(user *pb.UserEntity) error {
+	err = t.DoWithUser(ctx, userId, func(user *pb.UserEntity) error {
 
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(t.UserSaltKey + newPassword), bcrypt.DefaultCost)
 		if err != nil {
@@ -170,24 +164,33 @@ func (t *implUserService) ResetPassword(ctx context.Context, email string, newPa
 		}
 
 		user.PasswordHash = hashedPassword
+
+		email = user.Email
 		return nil
 	})
 
+	return
 }
 
-func (t *implUserService) AuthenticateUser(ctx context.Context, username, password string) (*pb.UserEntity, error) {
+func (t *implUserService) AuthenticateUser(ctx context.Context, login, password string) (*pb.UserEntity, error) {
 
-	username = strings.TrimSpace(username)
-	if username == "" {
-		return nil, errors.New("username is empty")
+	login = utils.NormalizeLogin(login)
+	if login == "" {
+		return nil, errors.New("empty login")
 	}
 
-	userId, err := t.HostStorage.Get(ctx).ByKey("email:%s", username).ToString()
+	userId, err := t.HostStorage.Get(ctx).ByKey("username:%s", login).ToString()
 	if err != nil {
 		return nil, err
 	}
 	if userId == "" {
-		userId = username
+		userId, err = t.HostStorage.Get(ctx).ByKey("email:%s", login).ToString()
+		if err != nil {
+			return nil, err
+		}
+		if userId == "" {
+			userId = login
+		}
 	}
 
 	user := new(pb.UserEntity)
@@ -230,6 +233,32 @@ func (t *implUserService) GetUser(ctx context.Context, userId string) (*pb.UserE
 	return user, nil
 }
 
+func (t *implUserService) GetUserIdByLogin(ctx context.Context, login string) (string, error) {
+
+	login = utils.NormalizeLogin(login)
+	if login == "" {
+		return "", errors.New("empty login")
+	}
+
+	userId, err := t.HostStorage.Get(ctx).ByKey("username:%s", login).ToString()
+	if err != nil {
+		return "", err
+	}
+	if userId != "" {
+		return userId, nil
+	}
+
+	userId, err = t.HostStorage.Get(ctx).ByKey("email:%s", login).ToString()
+	if err != nil {
+		return "", err
+	}
+	if userId != "" {
+		return userId, nil
+	}
+
+	return "", ErrUserNotFound
+}
+
 func (t *implUserService) GetUserIdByEmail(ctx context.Context, email string) (string, error) {
 
 	email = utils.NormalizeEmail(email)
@@ -238,6 +267,24 @@ func (t *implUserService) GetUserIdByEmail(ctx context.Context, email string) (s
 	}
 
 	userId, err := t.HostStorage.Get(ctx).ByKey("email:%s", email).ToString()
+	if err != nil {
+		return "", err
+	}
+	if userId == "" {
+		return "", ErrUserNotFound
+	}
+
+	return userId, nil
+}
+
+func (t *implUserService) GetUserIdByUsername(ctx context.Context, username string) (string, error) {
+
+	username = utils.NormalizeUsername(username)
+	if username == "" {
+		return "", errors.New("empty username")
+	}
+
+	userId, err := t.HostStorage.Get(ctx).ByKey("username:%s", username).ToString()
 	if err != nil {
 		return "", err
 	}
@@ -260,9 +307,55 @@ func (t *implUserService) SaveUser(ctx context.Context, user *pb.UserEntity) (er
 		err = t.TransactionalManager.EndTransaction(ctx, err)
 	}()
 
+	oldUser := new(pb.UserEntity)
+	err = t.HostStorage.Get(ctx).ByKey("%s:user", user.UserId).ToProto(oldUser)
+	if err != nil {
+		return err
+	}
+
+	// if found
+	if oldUser.UserId == user.UserId {
+		if oldUser.Username != user.Username {
+			err = t.HostStorage.Remove(ctx).ByKey("username:%s", oldUser.Username).Do()
+			if err != nil {
+				return err
+			}
+		}
+		if oldUser.Email != user.Email {
+			err = t.HostStorage.Remove(ctx).ByKey("email:%s", oldUser.Email).Do()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
 	err = t.HostStorage.Set(ctx).ByKey("%s:user", user.UserId).Proto(user)
 	if err != nil {
 		return err
+	}
+
+	// username index check
+	usedUserId, err := t.HostStorage.Get(ctx).ByKey("username:%s", user.Username).ToString()
+	if err != nil {
+		return err
+	}
+	if usedUserId != user.UserId {
+		return errors.Errorf("username '%s' is already used by user '%s'", user.Username, usedUserId)
+	}
+
+	// username index
+	err = t.HostStorage.Set(ctx).ByKey("username:%s", user.Username).String(user.UserId)
+	if err != nil {
+		return err
+	}
+
+	// email index check
+	usedUserId, err = t.HostStorage.Get(ctx).ByKey("email:%s", user.Email).ToString()
+	if err != nil {
+		return err
+	}
+	if usedUserId != user.UserId {
+		return errors.Errorf("email '%s' is already used by user '%s'", user.Email, usedUserId)
 	}
 
 	// email index
@@ -320,9 +413,17 @@ func (t *implUserService) doRemoveUser(ctx context.Context, user *pb.UserEntity)
 		return err
 	}
 
-	err = t.HostStorage.Remove(ctx).ByKey("email:%s", user.Email).Do()
+	err = t.HostStorage.Remove(ctx).ByKey("username:%s", user.Username).Do()
+	if err != nil {
+		return err
+	}
 
-	return
+	err = t.HostStorage.Remove(ctx).ByKey("email:%s", user.Email).Do()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (t *implUserService) DropUserContent(ctx context.Context, userId string) error {
@@ -370,6 +471,7 @@ func (t *implUserService) DoWithUser(ctx context.Context, userId string, cb func
 	if err != nil {
 		return errors.Errorf("load user '%s', %v", userId, err)
 	}
+	savedUsername := user.Username
 	savedEmail := user.Email
 
 	err = cb(user)
@@ -377,7 +479,36 @@ func (t *implUserService) DoWithUser(ctx context.Context, userId string, cb func
 		return err
 	}
 
+	if savedUsername != user.Username {
+
+		usedUserId, err := t.HostStorage.Get(ctx).ByKey("username:%s", user.Username).ToString()
+		if err != nil {
+			return err
+		}
+		if usedUserId != "" {
+			return errors.Errorf("username '%s' is already used by user '%s'", user.Username, usedUserId)
+		}
+
+		err = t.HostStorage.Set(ctx).ByKey("username:%s", user.Username).String(userId)
+		if err != nil {
+			return err
+		}
+
+		err = t.HostStorage.Remove(ctx).ByKey("username:%s", savedUsername).Do()
+		if err != nil {
+			return err
+		}
+	}
+
 	if savedEmail != user.Email {
+
+		usedUserId, err := t.HostStorage.Get(ctx).ByKey("email:%s", user.Email).ToString()
+		if err != nil {
+			return err
+		}
+		if usedUserId != "" {
+			return errors.Errorf("email '%s' is already used by user '%s'", user.Email, usedUserId)
+		}
 
 		err = t.HostStorage.Set(ctx).ByKey("email:%s", user.Email).String(userId)
 		if err != nil {
@@ -414,21 +545,21 @@ func (t *implUserService) DumpUser(ctx context.Context, userId string, cb func(e
 
 }
 
-func (t *implUserService) SaveRecoverCode(ctx context.Context, email string, rc *pb.RecoverCodeEntity, ttlSeconds int) error {
+func (t *implUserService) SaveRecoverCode(ctx context.Context, login string, rc *pb.RecoverCodeEntity, ttlSeconds int) error {
 
-	email = utils.NormalizeEmail(email)
-	if email == "" {
-		return errors.New("email is empty")
+	login = utils.NormalizeLogin(login)
+	if login == "" {
+		return errors.New("login is empty")
 	}
 
-	return t.HostStorage.Set(ctx).ByKey("recover:email:%s", email).WithTtl(ttlSeconds).Proto(rc)
+	return t.HostStorage.Set(ctx).ByKey("recover:login:%s", login).WithTtl(ttlSeconds).Proto(rc)
 }
 
-func (t *implUserService) ValidateRecoverCode(ctx context.Context, email string, code string) error {
+func (t *implUserService) ValidateRecoverCode(ctx context.Context, login string, code string) error {
 
-	email = utils.NormalizeEmail(email)
-	if email == "" {
-		return errors.New("email is empty")
+	login = utils.NormalizeLogin(login)
+	if login == "" {
+		return errors.New("login is empty")
 	}
 
 	code = utils.NormalizeCode(code)
@@ -437,7 +568,7 @@ func (t *implUserService) ValidateRecoverCode(ctx context.Context, email string,
 	}
 
 	rc := new(pb.RecoverCodeEntity)
-	err := t.HostStorage.Get(ctx).ByKey("recover:email:%s", email).ToProto(rc)
+	err := t.HostStorage.Get(ctx).ByKey("recover:login:%s", login).ToProto(rc)
 	if err != nil {
 		return err
 	}

@@ -39,6 +39,10 @@ build: bindata
 generate:
 	npm run generate --prefix webapp
 
+web:
+	export NODE_TLS_REJECT_UNAUTHORIZED=0
+	npm run dev --prefix webapp
+
 update:
 	go get -u ./...
 

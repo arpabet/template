@@ -69,7 +69,7 @@ export default {
   },
 
   proxy: {
-    '/api/': { target: 'https://codeallergy.com:8443', changeOrigin: true }
+    '/api/': { target: 'http://localhost:8443', changeOrigin: true }
   },
 
   auth: {

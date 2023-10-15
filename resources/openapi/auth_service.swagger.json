@@ -283,8 +283,9 @@
     "lighttemplateLoginRequest": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
+        "login": {
+          "type": "string",
+          "title": "could be an username or email"
         },
         "password": {
           "type": "string"
@@ -313,6 +314,9 @@
     "lighttemplateRegisterRequest": {
       "type": "object",
       "properties": {
+        "username": {
+          "type": "string"
+        },
         "firstName": {
           "type": "string"
         },
@@ -333,7 +337,7 @@
     "lighttemplateResetRequest": {
       "type": "object",
       "properties": {
-        "email": {
+        "login": {
           "type": "string"
         },
         "code": {
@@ -347,7 +351,7 @@
     "lighttemplateRestoreRequest": {
       "type": "object",
       "properties": {
-        "email": {
+        "login": {
           "type": "string"
         }
       }
@@ -407,6 +411,9 @@
       "type": "object",
       "properties": {
         "userId": {
+          "type": "string"
+        },
+        "username": {
           "type": "string"
         },
         "firstName": {

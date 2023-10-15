@@ -325,6 +325,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "username": {
+                  "type": "string"
+                },
                 "email": {
                   "type": "string"
                 },
@@ -467,6 +470,9 @@
         "id": {
           "type": "string"
         },
+        "username": {
+          "type": "string"
+        },
         "email": {
           "type": "string"
         },
@@ -536,6 +542,9 @@
           "format": "int32"
         },
         "id": {
+          "type": "string"
+        },
+        "username": {
           "type": "string"
         },
         "email": {

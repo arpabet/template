@@ -16,6 +16,7 @@
              <tr>
                <th><abbr title="Pos">Pos</abbr></th>
                <th><abbr title="Id">Id</abbr></th>
+               <th><abbr title="Username">Username</abbr></th>
                <th><abbr title="Email">Email</abbr></th>
                <th><abbr title="Name">Full Name</abbr></th>
                <th><abbr title="Role">Role</abbr></th>
@@ -27,6 +28,7 @@
              <tr>
                <th><abbr title="Pos">Pos</abbr></th>
                <th><abbr title="Id">Id</abbr></th>
+               <th><abbr title="Username">Username</abbr></th>
                <th><abbr title="Email">Email</abbr></th>
                <th><abbr title="Name">Full Name</abbr></th>
                <th><abbr title="Role">Role</abbr></th>
@@ -38,6 +40,7 @@
              <tr v-for="item in items" :key="item.position">
                <th>{{item.position}}</th>
                <th>{{item.id}}</th>
+               <td>{{item.username}}</td>
                <td>{{item.email}}</td>
                <td>{{item.full_name}}</td>
                <td>{{item.role}}</td>

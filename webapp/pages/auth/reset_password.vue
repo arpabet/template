@@ -70,15 +70,15 @@
         password: '',
         strength: 0,
 
-        email: '',
+        username: '',
         error: null,
       };
     },
 
     fetch() {
-        if ('email' in this.$route.query) {
-          this.email = this.$route.query.email;
-          this.error = 'Recovery code was sent to email ' + this.email;
+        if ('username' in this.$route.query) {
+          this.username = this.$route.query.username;
+          this.error = 'Recovery code was sent to ' + this.username;
         }
     },
 
@@ -86,14 +86,14 @@
       async restore() {
         try {
           await this.$axios.post('/api/auth/reset', {
-            email: this.email,
+            login: this.username,
             code: this.passcode,
             password: this.password,
           });
 
           await this.$auth.loginWith('local', {
             data: {
-              email: this.email,
+              login: this.username,
               password: this.password,
             },
           });

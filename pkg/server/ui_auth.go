@@ -22,7 +22,7 @@ import (
 
 func (t *implUIGrpcServer) Login(ctx context.Context, req *pb.LoginRequest) (resp *pb.LoginResponse, err error) {
 
-	entity, err := t.UserService.AuthenticateUser(ctx, req.Email, req.Password)
+	entity, err := t.UserService.AuthenticateUser(ctx, req.Login, req.Password)
 	if err == service.ErrUserNotFound {
 		return nil, status.Errorf(codes.NotFound, "user not found")
 	}
@@ -49,7 +49,7 @@ func (t *implUIGrpcServer) Login(ctx context.Context, req *pb.LoginRequest) (res
 	}
 
 	token, err := t.AuthorizationMiddleware.GenerateToken(&sprint.AuthorizedUser{
-		Username:  entity.UserId,
+		Username:  entity.Username,
 		Roles:     roles,
 		ExpiresAt: time.Now().Add(time.Minute * time.Duration(t.AccessTokenMinutes)).Unix(),
 	})
@@ -59,7 +59,7 @@ func (t *implUIGrpcServer) Login(ctx context.Context, req *pb.LoginRequest) (res
 	}
 
 	refreshToken, err := t.AuthorizationMiddleware.GenerateToken(&sprint.AuthorizedUser{
-		Username:  entity.UserId,
+		Username:  entity.Username,
 		ExpiresAt: time.Now().Add(time.Hour * time.Duration(t.RefreshTokenHours)).Unix(),
 	})
 
@@ -106,9 +106,22 @@ func (t *implUIGrpcServer) Refresh(ctx context.Context, req *pb.RefreshRequest) 
 
 	}()
 
-	info, err := t.UserService.GetUser(ctx, user.Username)
+	userId, err := t.UserService.GetUserIdByUsername(ctx, user.Username)
 	if err == service.ErrUserNotFound {
-		return nil, status.Errorf(codes.NotFound, "user not found")
+		err = status.Errorf(codes.NotFound, "username not found")
+		return
+	}
+	if err != nil {
+		return
+	}
+
+	info, err := t.UserService.GetUser(ctx, userId)
+	if err == service.ErrUserNotFound {
+		err = status.Errorf(codes.NotFound, "user not found")
+		return
+	}
+	if err != nil {
+		return
 	}
 
 	roles := make(map[string]bool)
@@ -133,7 +146,7 @@ func (t *implUIGrpcServer) Refresh(ctx context.Context, req *pb.RefreshRequest) 
 	})
 
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	return &pb.LoginResponse{
@@ -149,16 +162,25 @@ func (t *implUIGrpcServer) User(ctx context.Context, _ *emptypb.Empty) (*pb.User
 		return nil, status.Errorf(codes.Unauthenticated, "user not authorized")
 	}
 
-	info, err := t.UserService.GetUser(ctx, user.Username)
+	userId, err := t.UserService.GetUserIdByUsername(ctx, user.Username)
 	if err == service.ErrUserNotFound {
-		return nil, status.Errorf(codes.NotFound, "user not found")
+		return nil, status.Errorf(codes.NotFound, "user id not found")
 	}
 	if err != nil {
 		return nil, t.wrapError(err, "User", user.Username)
 	}
 
+	info, err := t.UserService.GetUser(ctx, userId)
+	if err == service.ErrUserNotFound {
+		return nil, status.Errorf(codes.NotFound, "user not found")
+	}
+	if err != nil {
+		return nil, t.wrapError(err, "UserId", userId)
+	}
+
 	u := &pb.User{
 		UserId:     info.UserId,
+		Username:   info.Username,
 		FirstName:  info.FirstName,
 		MiddleName: info.MiddleName,
 		LastName:   info.LastName,
@@ -262,7 +284,7 @@ func (t *implUIGrpcServer) Restore(ctx context.Context, req *pb.RestoreRequest) 
 
 	resp, err := t.doRestore(ctx, req)
 	if err != nil {
-		return nil, t.wrapError(err, "Restore", req.Email)
+		return nil, t.wrapError(err, "Restore", req.Login)
 	}
 
 	return resp, nil
@@ -272,10 +294,10 @@ func (t *implUIGrpcServer) doRestore(ctx context.Context, req *pb.RestoreRequest
 
 	//t.Log.Info("Restore", zap.Any("req", req.String()))
 
-	userId, err := t.UserService.GetUserIdByEmail(ctx, req.Email)
+	userId, err := t.UserService.GetUserIdByLogin(ctx, req.Login)
 	if err == service.ErrUserNotFound {
 		// do nothing, let's make illusion that this email also registered
-		t.Log.Info("RestoreUserNotFound", zap.Any("email", req.Email))
+		t.Log.Info("RestoreUserNotFound", zap.Any("login", req.Login))
 		return &emptypb.Empty{}, nil
 	}
 	if err != nil {
@@ -317,7 +339,7 @@ func (t *implUIGrpcServer) doRestore(ctx context.Context, req *pb.RestoreRequest
 		return nil, err
 	}
 
-	err = t.UserService.SaveRecoverCode(ctx, entity.Email, &pb.RecoverCodeEntity{
+	err = t.UserService.SaveRecoverCode(ctx, req.Login, &pb.RecoverCodeEntity{
 		Code:         code,
 		RemoteIp:     remoteIP,
 		CreTimestamp: time.Now().Unix(),
@@ -332,7 +354,7 @@ func (t *implUIGrpcServer) Reset(ctx context.Context, req *pb.ResetRequest) (res
 
 	//t.Log.Info("Reset", zap.Any("req", req.String()))
 
-	err = t.UserService.ValidateRecoverCode(ctx, req.Email, req.Code)
+	err = t.UserService.ValidateRecoverCode(ctx, req.Login, req.Code)
 	if err == service.ErrInvalidRecoverCode {
 		return nil, status.Errorf(codes.InvalidArgument, "wrong recovery code")
 	}
@@ -340,7 +362,7 @@ func (t *implUIGrpcServer) Reset(ctx context.Context, req *pb.ResetRequest) (res
 	defer func() {
 
 		if err != nil {
-			err = t.wrapError(err, "Reset", req.Email)
+			err = t.wrapError(err, "Reset", req.Login)
 		}
 
 	}()
@@ -349,7 +371,12 @@ func (t *implUIGrpcServer) Reset(ctx context.Context, req *pb.ResetRequest) (res
 		return nil, err
 	}
 
-	userId, err := t.UserService.ResetPassword(ctx, req.Email, req.Password)
+	userId, err := t.UserService.GetUserIdByLogin(ctx, req.Login)
+	if err != nil {
+		return nil, err
+	}
+
+	email, err := t.UserService.ResetPassword(ctx, userId, req.Password)
 	if err != nil {
 		return nil, err
 	}
@@ -357,7 +384,7 @@ func (t *implUIGrpcServer) Reset(ctx context.Context, req *pb.ResetRequest) (res
 	sender := t.Properties.GetString("mail.sender", "noreply@localhost")
 	support := t.Properties.GetString("mail.support", "support@localhost")
 
-	subject := fmt.Sprintf("Password reset for %s.", req.Email)
+	subject := fmt.Sprintf("Password reset for %s.", req.Login)
 	remoteIP, userAgent := getCallerInfo(ctx)
 
 	err = t.SecurityLogService.LogEvent(ctx, userId, "ResetPassword", remoteIP, userAgent)
@@ -367,7 +394,7 @@ func (t *implUIGrpcServer) Reset(ctx context.Context, req *pb.ResetRequest) (res
 
 	mail := sprint.Mail{
 		Sender:      sender,
-		Recipients:   []string{req.Email},
+		Recipients:   []string{email},
 		Subject:      subject,
 		TextTemplate: "resources:mail/reset_text.tmpl",
 		HtmlTemplate: "resources:mail/reset_html.tmpl",

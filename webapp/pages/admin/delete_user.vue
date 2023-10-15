@@ -23,6 +23,10 @@
               </div>
 
               <div class="block">
+                <strong>Username:</strong> {{ username }}
+              </div>
+
+              <div class="block">
                 <strong>Email:</strong> {{ email }}
               </div>
 
@@ -68,6 +72,7 @@ export default {
   data() {
     return {
       userId: '',
+      username: '',
       email: '',
       fullName: '',
       role: '',
@@ -82,6 +87,7 @@ export default {
     const res = await this.$axios.get('/api/admin/users/' + params.id);
     if (res.status === 200) {
       this.userId = res.data.id
+      this.username = res.data.username
       this.email = res.data.email
       this.fullName = res.data.full_name
       this.role = res.data.role

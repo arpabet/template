@@ -23,12 +23,15 @@ type UserService interface {
 
 	CreateUser(ctx context.Context, req *pb.RegisterRequest) (*pb.UserEntity, error)
 
-	ResetPassword(ctx context.Context, email string, newPassword string) (string, error)
+	ResetPassword(ctx context.Context, userId string, newPassword string) (email string, err error)
 
-	// could be userId or email
-	AuthenticateUser(ctx context.Context, username, password string) (*pb.UserEntity, error)
+	AuthenticateUser(ctx context.Context, login, password string) (*pb.UserEntity, error)
 
 	GetUser(ctx context.Context, userId string) (*pb.UserEntity, error)
+
+	GetUserIdByLogin(ctx context.Context, login string) (string, error)
+
+	GetUserIdByUsername(ctx context.Context, username string) (string, error)
 
 	GetUserIdByEmail(ctx context.Context, email string) (string, error)
 
@@ -44,9 +47,9 @@ type UserService interface {
 
 	EnumUsers(ctx context.Context, cb func(user *pb.UserEntity) bool) error
 
-	SaveRecoverCode(ctx context.Context, email string, rc *pb.RecoverCodeEntity, ttlSeconds int) error
+	SaveRecoverCode(ctx context.Context, login string, rc *pb.RecoverCodeEntity, ttlSeconds int) error
 
-	ValidateRecoverCode(ctx context.Context, email string, code string) error
+	ValidateRecoverCode(ctx context.Context, login string, code string) error
 }
 
 var SecurityLogServiceClass = reflect.TypeOf((*SecurityLogService)(nil)).Elem()

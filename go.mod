@@ -3,7 +3,7 @@ module github.com/sprintframework/template
 go 1.17
 
 require (
-	github.com/codeallergy/glue v1.1.3
+	github.com/codeallergy/glue v1.1.4
 	github.com/codeallergy/go-bindata v1.0.0
 	github.com/gomarkdown/markdown v0.0.0-20220905174103-7b278df48cfb
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
