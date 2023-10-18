@@ -21,6 +21,8 @@ type UserService interface {
 
 	GenerateUserId(ctx context.Context) (string, error)
 
+	IsUsernameAvailable(ctx context.Context, username string) (bool, string, error)
+
 	CreateUser(ctx context.Context, req *pb.RegisterRequest) (*pb.UserEntity, error)
 
 	ResetPassword(ctx context.Context, userId string, newPassword string) (email string, err error)

@@ -20,6 +20,10 @@ import (
 	"time"
 )
 
+const (
+	minUsernameLength = 5
+)
+
 type implUserService  struct {
 	Log                *zap.Logger              `inject`
 	ConfigRepository   sprint.ConfigRepository  `inject`
@@ -206,6 +210,16 @@ func (t *implUserService) AuthenticateUser(ctx context.Context, login, password 
 		return user, ErrUserInvalidPassword
 	}
 	return user, nil
+}
+
+func (t *implUserService) IsUsernameAvailable(ctx context.Context, username string) (bool, string, error) {
+
+	normName := utils.NormalizeUsername(username)
+	if len(normName) < minUsernameLength {
+		return false, normName, nil
+	}
+	userId, err := t.HostStorage.Get(ctx).ByKey("username:%s", normName).ToString()
+	return userId == "", normName, err
 }
 
 func (t *implUserService) GetUser(ctx context.Context, userId string) (*pb.UserEntity, error) {

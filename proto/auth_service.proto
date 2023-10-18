@@ -70,6 +70,13 @@ service AuthService {
         };
     }
 
+    rpc IsUsernameAvailable(UsernameRequest) returns (UsernameResponse) {
+        option (google.api.http) = {
+            put: "/api/auth/username"
+            body: "*"
+        };
+    }
+
     rpc Register(RegisterRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/auth/register"
@@ -112,6 +119,16 @@ message LoginResponse {
 
 message RefreshRequest {
     string refresh_token = 2;
+}
+
+message UsernameRequest {
+    string  name = 1;
+}
+
+message UsernameResponse {
+    string name = 1;
+    string norm_name = 2;
+    bool available = 3;
 }
 
 message User {

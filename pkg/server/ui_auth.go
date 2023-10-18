@@ -8,6 +8,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"github.com/sprintframework/sprintframework/sprintutils"
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/service"
 	"github.com/sprintframework/sprint"
@@ -153,6 +154,38 @@ func (t *implUIGrpcServer) Refresh(ctx context.Context, req *pb.RefreshRequest) 
 		Token: token,
 		RefreshToken: refreshToken,
 	}, nil
+}
+
+func (t *implUIGrpcServer) IsUsernameAvailable(ctx context.Context, req *pb.UsernameRequest) (resp *pb.UsernameResponse, err error) {
+
+	remoteIP, _ := getCallerInfo(ctx)
+
+	var rateLimiter *sprintutils.RateLimiter
+	if value, ok := t.usernameLimiterMap.Load(remoteIP); ok {
+		if pointer, ok := value.(*sprintutils.RateLimiter); ok {
+			rateLimiter = pointer
+		}
+	}
+
+	if rateLimiter == nil {
+		rateLimiter = new(sprintutils.RateLimiter)
+		rateLimiter.Limit = time.Second
+		t.usernameLimiterMap.Store(remoteIP, rateLimiter)
+	}
+
+	resp = new(pb.UsernameResponse)
+	resp.Name = req.Name
+
+	err = rateLimiter.Do(func() error {
+		resp.Available, resp.NormName, err = t.UserService.IsUsernameAvailable(ctx, req.Name)
+		return err
+	})
+
+	if err != nil {
+		return nil, t.wrapError(err, "UsernameAvailable", remoteIP)
+	}
+
+	return
 }
 
 func (t *implUIGrpcServer) User(ctx context.Context, _ *emptypb.Empty) (*pb.UserResponse, error) {

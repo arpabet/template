@@ -277,6 +277,38 @@
           "AuthService"
         ]
       }
+    },
+    "/api/auth/username": {
+      "put": {
+        "operationId": "AuthService_IsUsernameAvailable",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/lighttemplateUsernameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/lighttemplateUsernameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -442,6 +474,28 @@
       "properties": {
         "user": {
           "$ref": "#/definitions/lighttemplateUser"
+        }
+      }
+    },
+    "lighttemplateUsernameRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "lighttemplateUsernameResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "normName": {
+          "type": "string"
+        },
+        "available": {
+          "type": "boolean"
         }
       }
     },

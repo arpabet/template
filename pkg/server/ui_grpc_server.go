@@ -27,6 +27,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"net/http"
 	"strconv"
+	"sync"
 	"time"
 )
 
@@ -53,6 +54,8 @@ type implUIGrpcServer struct {
 	SecurityLogService    api.SecurityLogService  `inject`
 	PageService           api.PageService   `inject`
 	TransactionalManager  store.TransactionalManager  `inject:"bean=host-store"`
+
+	usernameLimiterMap   sync.Map   // key is the IP, value is struct RateLimiter
 
 	Log             *zap.Logger          `inject`
 
