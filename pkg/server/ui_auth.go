@@ -461,8 +461,13 @@ func (t *implUIGrpcServer) SecurityLog(ctx context.Context, req *pb.SecurityLogR
 
 	}()
 
+	userId, err := t.UserService.GetUserIdByUsername(ctx, user.Username)
+	if err != nil {
+		return nil, err
+	}
+
 	var log []*pb.SecurityLogEntity
-	err = t.SecurityLogService.EnumEvents(ctx, user.Username, func(event *pb.SecurityLogEntity) bool {
+	err = t.SecurityLogService.EnumEvents(ctx, userId, func(event *pb.SecurityLogEntity) bool {
 		log = append(log, event)
 		return true
 	})

@@ -37,9 +37,15 @@ func NormalizeUserId(userId string) string {
 }
 
 func NormalizeLogin(login string) string {
-	s := strings.TrimSpace(login)
-	s = strings.ToLower(s)
-	return strings.ReplaceAll(s, ":", "")
+	var out strings.Builder
+	for _, ch := range login {
+		low := unicode.ToLower(ch)
+		if low == ':' || low == ' ' {
+			continue
+		}
+		out.WriteRune(low)
+	}
+	return out.String()
 }
 
 func NormalizeEmail(email string) string {
@@ -47,7 +53,7 @@ func NormalizeEmail(email string) string {
 }
 
 func NormalizeUsername(username string) string {
-	return NormalizeLogin(username)
+	return NormalizeLowerUnreservedCharacters(username)
 }
 
 func NormalizeField(field string) string {
@@ -61,32 +67,44 @@ func NormalizeCode(code string) string {
 }
 
 func NormalizePageId(pageId string) string {
-	return NormalizeIdentityField(pageId)
+	return NormalizeLowerUnreservedCharacters(pageId)
 }
 
-func NormalizeIdentityField(email string) string {
+// RFC 3986 section 2.3 Unreserved Characters (January 2005)
+func NormalizeUnreservedCharacters(identity string) string {
 
 	var out strings.Builder
 
-	for _, ch := range email {
-		low := unicode.ToLower(ch)
-		if low >= 'a' && low <= 'z' {
+	for _, low := range identity {
+
+		if (low >= 'a' && low <= 'z') ||
+			(low >= 'A' && low <= 'Z') ||
+			(low >= '0' && low <= '9') ||
+			(low == '-' || low == '_' || low == '.' || low == '~' ) {
 			out.WriteRune(low)
-			continue
 		}
-		if low >= '0' && low <= '9' {
-			out.WriteRune(low)
-			continue
-		}
-		if low == '-' || low == '_' {
-			out.WriteRune(low)
-			continue
-		}
+
 	}
 
 	return out.String()
 }
 
+// RFC 3986 section 2.3 Unreserved Characters (January 2005)
+func NormalizeLowerUnreservedCharacters(identity string) string {
 
+	var out strings.Builder
 
+	for _, ch := range identity {
 
+		low := unicode.ToLower(ch)
+
+		if (low >= 'a' && low <= 'z') ||
+			(low >= '0' && low <= '9') ||
+			(low == '-' || low == '_' || low == '.' || low == '~' ) {
+			out.WriteRune(low)
+		}
+
+	}
+
+	return out.String()
+}

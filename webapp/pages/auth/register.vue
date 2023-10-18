@@ -7,7 +7,7 @@
 
           <Notification v-if="error" :message="error"/>
 
-          <form method="post" @submit.prevent="register">
+          <form method="post" autocomplete="off" @submit.prevent="register">
 
             <div class="field">
               <label class="label required">Username</label>
@@ -18,8 +18,11 @@
                   type="text"
                   class="input"
                   name="username"
+                  required
+                  @change="checkUsername"
                 />
               </div>
+              <p v-if="!check.available" class="error-message red">Username '{{check.name}}' is not available</p>
             </div>
 
             <div class="field">
@@ -103,7 +106,7 @@
             <br/>
 
             <div class="control">
-              <button :disabled="strength === 0" type="submit" class="button is-dark is-fullwidth">Register</button>
+              <button :disabled="strength === 0 || !check.available" type="submit" class="button is-dark is-fullwidth">Register</button>
             </div>
           </form>
 
@@ -132,6 +135,7 @@
     data() {
       return {
         username: '',
+        check: { name: '', available: true },
         firstName: '',
         middleName: '',
         lastName: '',
@@ -144,6 +148,21 @@
     },
 
     methods: {
+      async checkUsername() {
+        const name = this.username
+        this.check.name = name
+        try {
+          const res = await this.$axios.put('/api/auth/username', { name });
+          if (name === res.data.name) {
+            this.check.name = res.data.norm_name
+            this.username = res.data.norm_name
+            this.check.available = res.data.available
+          }
+        } catch (e) {
+          this.error = e.response.data.message;
+          this.check.available = false
+        }
+      },
       async register() {
         try {
           await this.$axios.post('/api/auth/register', {
