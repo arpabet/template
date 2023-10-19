@@ -7,8 +7,8 @@ package service
 
 import (
 	"context"
-	"github.com/pkg/errors"
 	"github.com/keyvalstore/store"
+	"github.com/pkg/errors"
 	"github.com/sprintframework/template/pkg/api"
 	"github.com/sprintframework/template/pkg/pb"
 	"github.com/sprintframework/template/pkg/utils"
@@ -18,10 +18,10 @@ import (
 	"time"
 )
 
-type implPageService  struct {
-	Log            *zap.Logger          `inject`
-	HostStorage    store.DataStore      `inject:"bean=host-store"`
-	TransactionalManager  store.TransactionalManager  `inject:"bean=host-store"`
+type implPageService struct {
+	Log                  *zap.Logger                `inject`
+	HostStore            store.DataStore            `inject:"bean=host-store"`
+	TransactionalManager store.TransactionalManager `inject:"bean=host-store"`
 }
 
 func PageService() api.PageService {
@@ -36,7 +36,7 @@ func (t *implPageService) GetPage(ctx context.Context, name string) (*pb.PageEnt
 	}
 
 	page := new(pb.PageEntity)
-	err := t.HostStorage.Get(ctx).ByKey("page:%s", name).ToProto(page)
+	err := t.HostStore.Get(ctx).ByKey("page:%s", name).ToProto(page)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (t *implPageService) CreatePage(ctx context.Context, newPage *pb.AdminPage)
 	}()
 
 	entity := new(pb.PageEntity)
-	err = t.HostStorage.Get(ctx).ByKey("page:%s", newPage.Name).ToProto(entity)
+	err = t.HostStore.Get(ctx).ByKey("page:%s", newPage.Name).ToProto(entity)
 	if err != nil {
 		return
 	}
@@ -90,7 +90,7 @@ func (t *implPageService) CreatePage(ctx context.Context, newPage *pb.AdminPage)
 		CreTimestamp: time.Now().Unix(),
 	}
 
-	err = t.HostStorage.Set(ctx).ByKey("page:%s", newPage.Name).Proto(entity)
+	err = t.HostStore.Set(ctx).ByKey("page:%s", newPage.Name).Proto(entity)
 	return
 
 }
@@ -110,7 +110,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 	if updatingPage.Name != updatingPage.Prev && updatingPage.Prev != "" {
 
 		entity := new(pb.PageEntity)
-		err = t.HostStorage.Get(ctx).ByKey("page:%s", updatingPage.Name).ToProto(entity)
+		err = t.HostStore.Get(ctx).ByKey("page:%s", updatingPage.Name).ToProto(entity)
 		if err != nil {
 			return
 		}
@@ -120,7 +120,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 			return
 		}
 
-		err = t.HostStorage.Remove(ctx).ByKey("page:%s", updatingPage.Prev).Do()
+		err = t.HostStore.Remove(ctx).ByKey("page:%s", updatingPage.Prev).Do()
 		if err != nil {
 			return
 		}
@@ -140,7 +140,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 		CreTimestamp: time.Now().Unix(),
 	}
 
-	err = t.HostStorage.Set(ctx).ByKey("page:%s", updatingPage.Name).Proto(entity)
+	err = t.HostStore.Set(ctx).ByKey("page:%s", updatingPage.Name).Proto(entity)
 	return
 
 }
@@ -152,12 +152,12 @@ func (t *implPageService) RemovePage(ctx context.Context, name string) error {
 		return errors.New("page name is empty")
 	}
 
-	return t.HostStorage.Remove(ctx).ByKey("page:%s", name).Do()
+	return t.HostStore.Remove(ctx).ByKey("page:%s", name).Do()
 }
 
 func (t *implPageService) EnumPages(ctx context.Context, cb func(page *pb.PageEntity) bool) error {
 
-	return t.HostStorage.Enumerate(ctx).
+	return t.HostStore.Enumerate(ctx).
 		ByPrefix("page:").
 		WithBatchSize(BatchSize).
 		DoProto(func() proto.Message {
@@ -183,4 +183,3 @@ func (t *implPageService) parseContentType(ct string) (pb.ContentType, error) {
 	}
 	return contentType, nil
 }
-
