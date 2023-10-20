@@ -7,17 +7,17 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/codeallergy/glue"
-	"github.com/sprintframework/template/pkg/api"
+	"github.com/pkg/errors"
 	"github.com/sprintframework/sprint"
+	"github.com/sprintframework/template/pkg/api"
 	"strings"
 )
 
 type implAdminCommand struct {
-	Context           glue.Context             `inject`
-	Application       sprint.Application        `inject`
-	ApplicationFlags   sprint.ApplicationFlags   `inject`
+	Context          glue.Context            `inject`
+	Application      sprint.Application      `inject`
+	ApplicationFlags sprint.ApplicationFlags `inject`
 }
 
 func AdminCommand() sprint.Command {

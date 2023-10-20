@@ -7,7 +7,7 @@ REGISTRY := codeallergy
 PWD := $(shell pwd)
 NOW := $(shell date +"%m-%d-%Y")
 
-all: build
+all: generate build
 
 version:
 	@echo $(TAG)
@@ -38,6 +38,7 @@ build: bindata
 
 generate:
 	npm run generate --prefix webapp
+	python3 gtag.py MYGTAG assets/
 
 web:
 	export NODE_TLS_REJECT_UNAUTHORIZED=0

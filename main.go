@@ -1,4 +1,4 @@
-//go:generate make generate
+//go:generate npm run generate --prefix webapp
 //go:generate python3 gtag.py MYGTAG assets/
 
 /*
@@ -16,6 +16,11 @@ import (
 	"github.com/sprintframework/natmod"
 	"github.com/sprintframework/sealmod"
 	"github.com/sprintframework/sprint"
+	"github.com/sprintframework/sprintframework/sprintapp"
+	"github.com/sprintframework/sprintframework/sprintclient"
+	"github.com/sprintframework/sprintframework/sprintcmd"
+	"github.com/sprintframework/sprintframework/sprintcore"
+	"github.com/sprintframework/sprintframework/sprintserver"
 	"github.com/sprintframework/sprintframework/sprintutils"
 	"github.com/sprintframework/template/pkg/assets"
 	"github.com/sprintframework/template/pkg/assetsgz"
@@ -24,11 +29,6 @@ import (
 	"github.com/sprintframework/template/pkg/resources"
 	"github.com/sprintframework/template/pkg/server"
 	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprintframework/sprintapp"
-	"github.com/sprintframework/sprintframework/sprintclient"
-	"github.com/sprintframework/sprintframework/sprintcmd"
-	"github.com/sprintframework/sprintframework/sprintcore"
-	"github.com/sprintframework/sprintframework/sprintserver"
 	"os"
 	"time"
 )
@@ -39,19 +39,19 @@ var (
 )
 
 var AppAssets = &glue.ResourceSource{
-	Name: "assets",
+	Name:       "assets",
 	AssetNames: assets.AssetNames(),
 	AssetFiles: assets.AssetFile(),
 }
 
 var AppGzipAssets = &glue.ResourceSource{
-	Name: "assets-gzip",
+	Name:       "assets-gzip",
 	AssetNames: assetsgz.AssetNames(),
 	AssetFiles: assetsgz.AssetFile(),
 }
 
 var AppResources = &glue.ResourceSource{
-	Name: "resources",
+	Name:       "resources",
 	AssetNames: resources.AssetNames(),
 	AssetFiles: resources.AssetFile(),
 }
@@ -60,7 +60,7 @@ func doMain() (err error) {
 
 	sprintutils.PanicToError(&err)
 
-	beans := []interface{} {
+	beans := []interface{}{
 		sprintapp.ApplicationBeans,
 		sprintcmd.ApplicationCommands,
 		cmd.Commands,
@@ -90,7 +90,6 @@ func doMain() (err error) {
 				sprintserver.HttpServerFactory("control-gateway-server"),
 				sprintserver.TlsConfigFactory("tls-config"),
 			),
-
 		),
 		glue.Child(sprint.ControlClientRole,
 			sprintclient.ControlClientBeans,
