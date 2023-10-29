@@ -21,28 +21,32 @@
           </nuxt-link>
         </div>
 
+
         <div class="navbar-end">
           <div v-if="isAuthenticated" class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              {{ loggedInUser.first_name }}
+              <small>{{ loggedInUser.first_name }}</small>
             </a>
-            <div class="navbar-dropdown">
+            <div id="navbarUser" class="navbar-dropdown is-right">
               <nuxt-link class="navbar-item" to="/profile/">My Profile</nuxt-link>
-              <nuxt-link class="navbar-item" to="/auth/security_log">Security Log</nuxt-link>
+              <nuxt-link class="navbar-item" to="/auth/security_log">Security</nuxt-link>
               <nuxt-link v-if="loggedInUser.role == 'ADMIN'" class="navbar-item" to="/admin/">Admin Dashboard</nuxt-link>
               <hr class="navbar-divider">
               <a class="navbar-item" @click="logout">Logout</a>
             </div>
           </div>
-          <template v-else>
-            <nuxt-link class="navbar-item is-danger" to="/auth/register">
-              <strong>Sign Up</strong>
-            </nuxt-link>
-            <nuxt-link class="navbar-item is-light" to="/auth/login">
-              <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" style="margin-left: 7px;" />
-            </nuxt-link>
-          </template>
+          <div v-else class="navbar-item">
+            <div class="buttons">
+              <nuxt-link class="button is-danger" to="/auth/register">
+                <strong>Sign Up</strong>
+              </nuxt-link>
+              <nuxt-link class="button is-light" to="/auth/login">
+                <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" style="margin-left: 7px;" />
+              </nuxt-link>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </nav>
