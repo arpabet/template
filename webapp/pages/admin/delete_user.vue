@@ -3,7 +3,7 @@
       <div class="column is-6 is-offset-1">
         <h2 class="title has-text-centered">Delete Confirmation</h2>
 
-        <Notification v-if="error" :message="error"/>
+        <Notification v-if="error" :message="error" @close="error=null"/>
         <FetchNotification :fetchState="$fetchState" />
 
         <form method="post" autocomplete="off" @submit.prevent="deleteUser">

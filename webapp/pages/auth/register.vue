@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Registration</h2>
 
-          <Notification v-if="error" :message="error"/>
+          <Notification v-if="error" :message="error" @close="error=null"/>
 
           <form method="post" autocomplete="off" class="box" @submit.prevent="register">
 

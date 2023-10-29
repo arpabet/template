@@ -2,7 +2,7 @@
   <div class="columns">
     <div class="column is-6">
 
-      <Notification v-if="error" :message="error"/>
+      <Notification v-if="error" :message="error" @close="error=null"/>
       <FetchNotification :fetchState="$fetchState" />
 
       <form method="post" autocomplete="off" @submit.prevent="updateUser">

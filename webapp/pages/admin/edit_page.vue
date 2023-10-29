@@ -3,7 +3,7 @@
       <div class="column is-5 is-offset-0">
         <h2 class="title has-text-centered">Edit Page</h2>
 
-        <Notification v-if="error" :message="error"/>
+        <Notification v-if="error" :message="error" @close="error=null"/>
 
         <form method="post" class="box" @submit.prevent="updatePage">
 

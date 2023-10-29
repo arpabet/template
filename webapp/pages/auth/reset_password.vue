@@ -5,7 +5,8 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Reset Password</h2>
 
-          <Notification v-if="error" :message="error"/>
+          <Notification v-if="error" :message="error" @close="error=null"/>
+          <Notification v-if="info" :message="info" level="is-info" @close="info=null"/>
 
           <form method="post" autocomplete="off" class="box" @submit.prevent="restore">
 

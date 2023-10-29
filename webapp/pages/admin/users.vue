@@ -7,7 +7,7 @@
          </div>
        </div>
 
-       <Notification v-if="error" :message="error"/>
+       <Notification v-if="error" :message="error" @close="error=null"/>
 
        <div v-if="items != null && items.length > 0" class="block">
 

@@ -3,7 +3,7 @@
       <div class="container">
         <h2 class="title">Auth Log</h2>
 
-          <Notification v-if="error" :message="error"/>
+          <Notification v-if="error" :message="error" @close="error=null"/>
 
           <div v-if="items != null && items.length > 0" class="block">
 
