@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns">
         <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Welcome back!</h2>
+          <h2 class="title has-text-centered">Login</h2>
 
           <Notification v-if="error" :message="error"/>
 
