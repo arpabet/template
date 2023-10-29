@@ -3,11 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Register!</h2>
+          <h2 class="title has-text-centered">Registration</h2>
 
           <Notification v-if="error" :message="error"/>
 
-          <form method="post" autocomplete="off" @submit.prevent="register">
+          <form method="post" autocomplete="off" class="box" @submit.prevent="register">
 
             <div class="field">
               <label class="label required">Username</label>

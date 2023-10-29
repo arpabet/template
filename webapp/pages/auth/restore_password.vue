@@ -3,11 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Restore!</h2>
+          <h2 class="title has-text-centered">Restore Password</h2>
 
           <Notification v-if="error" :message="error"/>
 
-          <form method="post" @submit.prevent="restore">
+          <form method="post" class="box" @submit.prevent="restore">
 
             <div class="field">
               <label class="label required">Login</label>

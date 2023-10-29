@@ -1,7 +1,7 @@
 <template>
     <section class="section">
       <div class="container">
-        <h2 class="title">Security Log</h2>
+        <h2 class="title">Auth Log</h2>
 
           <Notification v-if="error" :message="error"/>
 

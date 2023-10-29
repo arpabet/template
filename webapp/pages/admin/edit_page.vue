@@ -5,7 +5,7 @@
 
         <Notification v-if="error" :message="error"/>
 
-        <form method="post" @submit.prevent="updatePage">
+        <form method="post" class="box" @submit.prevent="updatePage">
 
           <div class="field">
             <label class="label required">/static?page={name}</label>

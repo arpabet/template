@@ -7,7 +7,7 @@
 
           <Notification v-if="error" :message="error"/>
 
-          <form method="post" @submit.prevent="login">
+          <form method="post" class="box" @submit.prevent="login">
 
             <div class="field">
               <label class="label required">Login</label>
