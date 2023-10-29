@@ -41,7 +41,7 @@
                 <strong>Sign Up</strong>
               </nuxt-link>
               <nuxt-link class="button is-light" to="/auth/login">
-                <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" style="margin-left: 7px;" />
+                <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" class="ml-2" />
               </nuxt-link>
             </div>
           </div>
