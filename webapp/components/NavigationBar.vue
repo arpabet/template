@@ -35,8 +35,12 @@
             </div>
           </div>
           <template v-else>
-            <nuxt-link class="navbar-item" to="/auth/register">Register</nuxt-link>
-            <nuxt-link class="navbar-item" to="/auth/login">Log In</nuxt-link>
+            <nuxt-link class="navbar-item is-danger" to="/auth/register">
+              <strong>Sign Up</strong>
+            </nuxt-link>
+            <nuxt-link class="navbar-item is-light" to="/auth/login">
+              <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" style="margin-left: 7px;" />
+            </nuxt-link>
           </template>
         </div>
       </div>
