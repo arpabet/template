@@ -7,15 +7,15 @@ require (
 	github.com/codeallergy/go-bindata v1.0.0
 	github.com/gomarkdown/markdown v0.0.0-20220905174103-7b278df48cfb
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
-	github.com/keyvalstore/badgerstore v1.3.0
-	github.com/keyvalstore/store v1.3.0
+	github.com/keyvalstore/badgerstore v1.3.1
+	github.com/keyvalstore/store v1.3.1
 	github.com/pkg/errors v0.9.1
-	github.com/sprintframework/certmod v1.0.2
-	github.com/sprintframework/dnsmod v1.0.2
+	github.com/sprintframework/certmod v1.0.3
+	github.com/sprintframework/dnsmod v1.0.3
 	github.com/sprintframework/natmod v1.0.2
 	github.com/sprintframework/sealmod v1.0.2
-	github.com/sprintframework/sprint v1.3.14
-	github.com/sprintframework/sprintframework v1.3.14
+	github.com/sprintframework/sprint v1.4.1
+	github.com/sprintframework/sprintframework v1.4.1
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.24.0
@@ -55,9 +55,9 @@ require (
 	github.com/huin/goupnp v1.2.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/keyvalstore/bboltstore v1.3.0 // indirect
-	github.com/keyvalstore/boltstore v1.3.0 // indirect
-	github.com/keyvalstore/cachestore v1.3.0 // indirect
+	github.com/keyvalstore/bboltstore v1.3.1 // indirect
+	github.com/keyvalstore/boltstore v1.3.1 // indirect
+	github.com/keyvalstore/cachestore v1.3.1 // indirect
 	github.com/klauspost/compress v1.16.0 // indirect
 	github.com/likexian/whois v1.14.2 // indirect
 	github.com/mailgun/mailgun-go/v4 v4.8.1 // indirect
@@ -68,9 +68,9 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sprintframework/cert v1.0.2 // indirect
+	github.com/sprintframework/cert v1.0.3 // indirect
 	github.com/sprintframework/certpb v1.0.0 // indirect
-	github.com/sprintframework/dns v1.0.2 // indirect
+	github.com/sprintframework/dns v1.0.3 // indirect
 	github.com/sprintframework/nat v1.0.2 // indirect
 	github.com/sprintframework/seal v1.0.2 // indirect
 	github.com/sprintframework/sprintpb v1.3.0 // indirect
