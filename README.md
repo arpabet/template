@@ -1,6 +1,6 @@
 # template
 
-![build workflow](https://github.com/sprintframework/template/actions/workflows/build.yaml/badge.svg)
+![build workflow](https://go.arpabet.com/template/actions/workflows/build.yaml/badge.svg)
 
 Template Server Application on Golang with Web Interface on Vue.Js.
 Application ships as a single executable file for easy installation.

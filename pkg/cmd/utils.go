@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
 package cmd
 
 import (
-	"github.com/codeallergy/glue"
+	"go.arpabet.com/glue"
 	"github.com/pkg/errors"
-	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/template/pkg/api"
+	"go.arpabet.com/sprint"
+	"go.arpabet.com/template/pkg/api"
 	"reflect"
 )
 

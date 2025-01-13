@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -9,8 +9,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/pkg/errors"
-	"github.com/sprintframework/template/pkg/pb"
-	"github.com/sprintframework/template/pkg/service"
+	"go.arpabet.com/template/pkg/pb"
+	"go.arpabet.com/template/pkg/service"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"

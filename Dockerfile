@@ -1,4 +1,4 @@
-# Copyright (c) Zander Schwid & Co. LLC.
+# Copyright (c) Karagatan LLC.
 # SPDX-License-Identifier: BUSL-1.1
 
 FROM codeallergy/ubuntu-golang as builder
@@ -6,7 +6,7 @@ FROM codeallergy/ubuntu-golang as builder
 ARG VERSION
 ARG BUILD
 
-WORKDIR /go/src/github.com/sprintframework/template
+WORKDIR /go/src/go.arpabet.com/template
 ADD . .
 
 ENV GONOSUMDB github.com
@@ -23,7 +23,7 @@ RUN make
 FROM ubuntu:18.04
 WORKDIR /app/bin
 
-COPY --from=builder /go/src/github.com/sprintframework/template/template .
+COPY --from=builder /go/src/go.arpabet.com/template/template .
 
 EXPOSE 8080 8443 8444
 

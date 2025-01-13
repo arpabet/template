@@ -2,7 +2,7 @@
 //go:generate python3 gtag.py MYGTAG assets/
 
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -10,25 +10,25 @@ package main
 
 import (
 	"fmt"
-	"github.com/codeallergy/glue"
-	"github.com/sprintframework/certmod"
-	"github.com/sprintframework/dnsmod"
-	"github.com/sprintframework/natmod"
-	"github.com/sprintframework/sealmod"
-	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/sprintapp"
-	"github.com/sprintframework/sprintframework/sprintclient"
-	"github.com/sprintframework/sprintframework/sprintcmd"
-	"github.com/sprintframework/sprintframework/sprintcore"
-	"github.com/sprintframework/sprintframework/sprintserver"
-	"github.com/sprintframework/sprintframework/sprintutils"
-	"github.com/sprintframework/template/pkg/assets"
-	"github.com/sprintframework/template/pkg/assetsgz"
-	"github.com/sprintframework/template/pkg/client"
-	"github.com/sprintframework/template/pkg/cmd"
-	"github.com/sprintframework/template/pkg/resources"
-	"github.com/sprintframework/template/pkg/server"
-	"github.com/sprintframework/template/pkg/service"
+	"go.arpabet.com/glue"
+	"go.arpabet.com/certmod"
+	"go.arpabet.com/dnsmod"
+	"go.arpabet.com/natmod"
+	"go.arpabet.com/sealmod"
+	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprintframework/sprintapp"
+	"go.arpabet.com/sprintframework/sprintclient"
+	"go.arpabet.com/sprintframework/sprintcmd"
+	"go.arpabet.com/sprintframework/sprintcore"
+	"go.arpabet.com/sprintframework/sprintserver"
+	"go.arpabet.com/sprintframework/sprintutils"
+	"go.arpabet.com/template/pkg/assets"
+	"go.arpabet.com/template/pkg/assetsgz"
+	"go.arpabet.com/template/pkg/client"
+	"go.arpabet.com/template/pkg/cmd"
+	"go.arpabet.com/template/pkg/resources"
+	"go.arpabet.com/template/pkg/server"
+	"go.arpabet.com/template/pkg/service"
 	"os"
 	"time"
 )

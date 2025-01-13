@@ -1,7 +1,7 @@
 // +build tools
 
 /*
- * Copyright (c) 2022-2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2022-2025 Karagatan LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -17,7 +17,7 @@
 package main
 
 import (
-_ "github.com/codeallergy/go-bindata/go-bindata"
+_ "go.arpabet.com/go-bindata/go-bindata"
 _ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway"
 _ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2"
 _ "google.golang.org/grpc/cmd/protoc-gen-go-grpc"

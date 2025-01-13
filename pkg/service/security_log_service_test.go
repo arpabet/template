@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -7,7 +7,7 @@ package service_test
 
 import (
 	"github.com/stretchr/testify/require"
-	"github.com/sprintframework/template/pkg/service"
+	"go.arpabet.com/template/pkg/service"
 	"sync"
 	"testing"
 	"time"

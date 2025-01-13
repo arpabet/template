@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -8,13 +8,13 @@ package service_test
 import (
 	"context"
 	"fmt"
-	"github.com/keyvalstore/badgerstore"
-	"github.com/keyvalstore/store"
-	"github.com/codeallergy/glue"
-	"github.com/sprintframework/template/pkg/api"
-	"github.com/sprintframework/template/pkg/pb"
-	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprintframework/sprintcore"
+	"go.arpabet.com/badgerstore"
+	"go.arpabet.com/store"
+	"go.arpabet.com/glue"
+	"go.arpabet.com/template/pkg/api"
+	"go.arpabet.com/template/pkg/pb"
+	"go.arpabet.com/template/pkg/service"
+	"go.arpabet.com/sprintframework/sprintcore"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 	"os"

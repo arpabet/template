@@ -14,7 +14,7 @@ version:
 
 deps:
 	go install \
-		github.com/codeallergy/go-bindata/go-bindata \
+		go.arpabet.com/go-bindata/go-bindata \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
 		google.golang.org/protobuf/cmd/protoc-gen-go \
@@ -86,7 +86,7 @@ clean:
 	echo "y" | docker system prune
 
 licenses:
-	go-licenses csv "github.com/sprintframework/template" > resources/licenses.txt
+	go-licenses csv "go.arpabet.com/template" > resources/licenses.txt
 
 
 

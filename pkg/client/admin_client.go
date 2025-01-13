@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -8,8 +8,8 @@ package client
 
 import (
 	"context"
-	"github.com/sprintframework/template/pkg/api"
-	"github.com/sprintframework/template/pkg/pb"
+	"go.arpabet.com/template/pkg/api"
+	"go.arpabet.com/template/pkg/pb"
 	"google.golang.org/grpc"
 	"sync"
 )

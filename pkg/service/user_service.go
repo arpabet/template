@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -8,13 +8,13 @@ package service
 import (
 	"context"
 	"fmt"
-	"github.com/keyvalstore/store"
+	"go.arpabet.com/store"
 	"github.com/pkg/errors"
-	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/sprintutils"
-	"github.com/sprintframework/template/pkg/api"
-	"github.com/sprintframework/template/pkg/pb"
-	"github.com/sprintframework/template/pkg/utils"
+	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprintframework/sprintutils"
+	"go.arpabet.com/template/pkg/api"
+	"go.arpabet.com/template/pkg/pb"
+	"go.arpabet.com/template/pkg/utils"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
 	"time"

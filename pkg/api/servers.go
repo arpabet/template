@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
 package api
 
 import (
-	"github.com/codeallergy/glue"
-	"github.com/sprintframework/sprint"
+	"go.arpabet.com/glue"
+	"go.arpabet.com/sprint"
 	"reflect"
 )
 

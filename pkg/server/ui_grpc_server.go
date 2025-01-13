@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -11,13 +11,13 @@ import (
 	"fmt"
 	"github.com/gomarkdown/markdown"
 	"github.com/pkg/errors"
-	"github.com/keyvalstore/store"
-	"github.com/codeallergy/glue"
-	"github.com/sprintframework/template/pkg/api"
-	"github.com/sprintframework/template/pkg/pb"
-	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprint"
-	"github.com/sprintframework/sprintframework/sprintutils"
+	"go.arpabet.com/store"
+	"go.arpabet.com/glue"
+	"go.arpabet.com/template/pkg/api"
+	"go.arpabet.com/template/pkg/pb"
+	"go.arpabet.com/template/pkg/service"
+	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprintframework/sprintutils"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Zander Schwid & Co. LLC.
+ * Copyright (c) 2025 Karagatan LLC.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
@@ -8,10 +8,10 @@ package server
 import (
 	"context"
 	"fmt"
-	"github.com/sprintframework/sprintframework/sprintutils"
-	"github.com/sprintframework/template/pkg/pb"
-	"github.com/sprintframework/template/pkg/service"
-	"github.com/sprintframework/sprint"
+	"go.arpabet.com/sprintframework/sprintutils"
+	"go.arpabet.com/template/pkg/pb"
+	"go.arpabet.com/template/pkg/service"
+	"go.arpabet.com/sprint"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
