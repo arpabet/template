@@ -1,6 +1,8 @@
 module go.arpabet.com/template
 
-go 1.18
+go 1.21
+
+toolchain go1.23.4
 
 require (
 	github.com/gomarkdown/markdown v0.0.0-20220905174103-7b278df48cfb
@@ -9,7 +11,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	go.arpabet.com/badgerstore v1.0.1
 	go.arpabet.com/certmod v1.0.0
-	go.arpabet.com/dnsmod v1.0.0
+	go.arpabet.com/dnsmod v1.0.1
 	go.arpabet.com/glue v1.0.0
 	go.arpabet.com/go-bindata v1.1.0
 	go.arpabet.com/natmod v1.0.0
@@ -56,7 +58,7 @@ require (
 	github.com/keyvalstore/badgerstore v1.3.1 // indirect
 	github.com/keyvalstore/store v1.3.1 // indirect
 	github.com/klauspost/compress v1.16.0 // indirect
-	github.com/likexian/whois v1.14.2 // indirect
+	github.com/likexian/whois v1.14.8 // indirect
 	github.com/mailgun/mailgun-go/v4 v4.8.1 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
