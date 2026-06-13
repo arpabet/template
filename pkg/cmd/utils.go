@@ -8,12 +8,12 @@ package cmd
 import (
 	"go.arpabet.com/glue"
 	"github.com/pkg/errors"
-	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprint/sprint"
 	"go.arpabet.com/template/pkg/api"
 	"reflect"
 )
 
-func doWithAdminClient(parent glue.Context, cb func(client api.AdminClient) error) error {
+func doWithAdminClient(parent glue.Container, cb func(client api.AdminClient) error) error {
 
 	return sprint.DoWithClient(parent, sprint.ControlClientRole, api.AdminClientClass, func(instance interface{}) error {
 

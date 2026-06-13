@@ -9,13 +9,13 @@ import (
 	"fmt"
 	"go.arpabet.com/glue"
 	"github.com/pkg/errors"
-	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprint/sprint"
 	"go.arpabet.com/template/pkg/api"
 	"strings"
 )
 
 type implAdminCommand struct {
-	Context          glue.Context            `inject`
+	Context          glue.Container            `inject`
 	Application      sprint.Application      `inject`
 	ApplicationFlags sprint.ApplicationFlags `inject`
 }

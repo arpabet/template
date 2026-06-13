@@ -7,7 +7,7 @@ package api
 
 import (
 	"go.arpabet.com/glue"
-	"go.arpabet.com/sprint"
+	"go.arpabet.com/sprint/sprint"
 	"reflect"
 )
 
