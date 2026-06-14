@@ -37,7 +37,7 @@ build: bindata
 	go build -o $(BIN) -v -ldflags "-X main.Version=$(VERSION) -X main.Build=$(NOW)"
 
 generate:
-	npm run generate --prefix webapp
+	npm run build --prefix webapp
 	python3 gtag.py MYGTAG assets/
 
 web:

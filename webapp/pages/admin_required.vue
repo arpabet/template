@@ -17,9 +17,6 @@
 
 export default {
 
-  layout: 'default',
-  middleware: 'auth',
-
   data() {
     return {
     };
@@ -29,3 +26,7 @@ export default {
 };
 
 </script>
+
+<route>
+{ meta: { middleware: "auth" } }
+</route>

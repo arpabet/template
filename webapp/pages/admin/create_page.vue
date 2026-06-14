@@ -97,8 +97,6 @@ export default {
         Notification,
     },
 
-    layout: 'admin',
-    middleware: 'auth-admin',
 
     data() {
       return {
@@ -144,3 +142,7 @@ export default {
  }
 
 </style>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

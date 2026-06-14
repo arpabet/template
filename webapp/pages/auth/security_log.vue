@@ -51,7 +51,7 @@
   </template>
 
   <script>
-    import { mapGetters } from 'vuex';
+    import Notification from '~/components/Notification';
     import Pagination from '~/components/Pagination';
 
     export default {
@@ -60,8 +60,6 @@
         Notification,
         Pagination,
       },
-
-      middleware: 'auth',
 
       data() {
         return {
@@ -74,7 +72,9 @@
       },
 
       computed: {
-        ...mapGetters(['loggedInUser']),
+        loggedInUser() {
+          return this.$auth.loggedInUser;
+        },
       },
 
       async created() {
@@ -108,3 +108,7 @@
 
     };
   </script>
+
+<route>
+{ meta: { middleware: "auth" } }
+</route>

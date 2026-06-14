@@ -6,7 +6,9 @@
 
 <script>
 export default {
-  layout: 'admin',
-  middleware: 'auth-admin',
 };
 </script>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

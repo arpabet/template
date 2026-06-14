@@ -28,10 +28,9 @@
               <label class="label required">New Password</label>
 
               <div class="control">
-                <VuePassword
+                <PasswordInput
                     v-model="password"
                     :strength="strength"
-                    type="password"
                     required
                     @input="updateStrength"
                 />
@@ -44,7 +43,7 @@
           </form>
 
           <div class="has-text-centered" style="margin-top: 20px">
-            Already got an account? <nuxt-link to="/auth/login">Login</nuxt-link>
+            Already got an account? <router-link to="/auth/login">Login</router-link>
           </div>
         </div>
       </div>
@@ -53,17 +52,15 @@
 </template>
 
 <script>
-  import VuePassword from 'vue-password';
+  import PasswordInput from '~/components/PasswordInput.vue';
   import Notification from '~/components/Notification';
 
   export default {
 
     components: {
-      VuePassword,
+      PasswordInput,
       Notification,
     },
-
-    middleware: 'guest',
 
     data() {
       return {
@@ -76,7 +73,7 @@
       };
     },
 
-    fetch() {
+    created() {
         if ('username' in this.$route.query) {
           this.username = this.$route.query.username;
           this.error = 'Recovery code was sent to ' + this.username;
@@ -145,3 +142,7 @@
     color: red;
   }
 </style>
+
+<route>
+{ meta: { middleware: "guest" } }
+</route>

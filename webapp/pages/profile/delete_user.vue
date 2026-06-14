@@ -32,7 +32,6 @@
  </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import Notification from '~/components/Notification';
 
 export default {
@@ -41,9 +40,6 @@ export default {
     Notification,
   },
 
-  layout: 'default',
-  middleware: 'auth',
-
   data() {
     return {
       error: null,
@@ -51,7 +47,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['loggedInUser']),
+    loggedInUser() {
+      return this.$auth.loggedInUser;
+    },
   },
 
   methods: {
@@ -71,3 +69,7 @@ export default {
 };
 
 </script>
+
+<route>
+{ meta: { middleware: "auth" } }
+</route>

@@ -23,8 +23,6 @@
 <script>
 export default {
 
-  middleware: 'guest',
-
   data() {
     return {
       title: '',
@@ -69,3 +67,7 @@ export default {
 
 }
 </script>
+
+<route>
+{ meta: { middleware: "guest" } }
+</route>

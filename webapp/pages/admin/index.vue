@@ -46,8 +46,6 @@
 <script>
 
   export default {
-    layout: 'admin',
-    middleware: 'auth-admin',
 
     data() {
       return {
@@ -61,3 +59,7 @@
 
   };
 </script>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

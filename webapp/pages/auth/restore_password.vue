@@ -29,7 +29,7 @@
           </form>
 
           <div class="has-text-centered" style="margin-top: 20px">
-            Already have an account? <nuxt-link to="/auth/login">Login</nuxt-link>
+            Already have an account? <router-link to="/auth/login">Login</router-link>
           </div>
         </div>
       </div>
@@ -46,7 +46,6 @@
       Notification,
     },
 
-    middleware: 'guest',
 
     data() {
       return {
@@ -76,3 +75,7 @@
     color: red;
   }
 </style>
+
+<route>
+{ meta: { middleware: "guest" } }
+</route>

@@ -84,10 +84,9 @@
               <label class="label required">Password</label>
 
               <div class="control">
-                <VuePassword
+                <PasswordInput
                     v-model="password"
                     :strength="strength"
-                    type="password"
                     required
                     @input="updateStrength"
                 />
@@ -99,7 +98,7 @@
             <div class="container">
               <label class="checkbox">
                 <input v-model="agree" type="checkbox" required />
-                I agree to the <nuxt-link :to="{ path: '/static', query: { page: 'terms_of_use' }}" target="_blank">Terms Of Use</nuxt-link>
+                I agree to the <router-link :to="{ path: '/static', query: { page: 'terms_of_use' }}" target="_blank">Terms Of Use</router-link>
               </label>
             </div>
 
@@ -111,7 +110,7 @@
           </form>
 
           <div class="has-text-centered" style="margin-top: 20px">
-            Already got an account? <nuxt-link to="/auth/login">Login</nuxt-link>
+            Already got an account? <router-link to="/auth/login">Login</router-link>
           </div>
         </div>
       </div>
@@ -120,17 +119,15 @@
 </template>
 
 <script>
-  import VuePassword from 'vue-password';
+  import PasswordInput from '~/components/PasswordInput.vue';
   import Notification from '~/components/Notification';
 
   export default {
 
     components: {
-      VuePassword,
+      PasswordInput,
       Notification,
     },
-
-    middleware: 'guest',
 
     data() {
       return {
@@ -224,3 +221,7 @@
     color: red;
   }
 </style>
+
+<route>
+{ meta: { middleware: "guest" } }
+</route>

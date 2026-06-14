@@ -48,16 +48,16 @@
                <td>
                   <nav class="level">
                     <div class="level-left">
-                      <nuxt-link :to="{ path: '/admin/edit_user', query: { id: item.id }}" class="level-item" aria-label="edit">
+                      <router-link :to="{ path: '/admin/edit_user', query: { id: item.id }}" class="level-item" aria-label="edit">
                         <span class="icon is-small">
                           <font-awesome-icon icon="fa-solid fa-edit" />
                         </span>
-                      </nuxt-link>
-                      <nuxt-link :to="{ path: '/admin/delete_user', query: { id: item.id }}" class="level-item" aria-label="delete">
+                      </router-link>
+                      <router-link :to="{ path: '/admin/delete_user', query: { id: item.id }}" class="level-item" aria-label="delete">
                         <span class="icon is-small">
                           <font-awesome-icon icon="fa-solid fa-trash" />
                         </span>
-                      </nuxt-link>
+                      </router-link>
                     </div>
                   </nav>
                </td>
@@ -77,7 +77,8 @@
 </template>
 
 <script>
- import Pagination from '~/components/Pagination';
+ import Notification from '~/components/Notification.vue';
+  import Pagination from '~/components/Pagination.vue';
 
  export default {
 
@@ -86,8 +87,6 @@
        Pagination,
    },
 
-   layout: 'admin',
-   middleware: 'auth-admin',
 
    data() {
      return {
@@ -130,3 +129,7 @@
 
  };
 </script>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

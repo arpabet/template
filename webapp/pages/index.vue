@@ -39,11 +39,14 @@
 
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser']),
+    isAuthenticated() {
+      return this.$auth.isAuthenticated;
+    },
+    loggedInUser() {
+      return this.$auth.loggedInUser;
+    },
   },
 };
 </script>

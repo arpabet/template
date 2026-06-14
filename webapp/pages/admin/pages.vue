@@ -38,23 +38,23 @@
             <tbody>
               <tr v-for="item in items" :key="item.position">
                 <th>{{item.position}}</th>
-                <td><nuxt-link :to="{ path: '/static', query: { page: item.name }}">{{item.name}}</nuxt-link></td>
+                <td><router-link :to="{ path: '/static', query: { page: item.name }}">{{item.name}}</router-link></td>
                 <td>{{item.title}}</td>
                 <th>{{new Date(item.created_at*1000).toLocaleDateString("en-US")}}</th>
                 <td>
                   <nav class="level">
                     <div class="level-left">
-                      <nuxt-link :to="{ path: '/admin/edit_page', query: { name: item.name }}" class="level-item" aria-label="edit">
+                      <router-link :to="{ path: '/admin/edit_page', query: { name: item.name }}" class="level-item" aria-label="edit">
                         <span class="icon is-small">
                           <font-awesome-icon icon="fa-solid fa-edit" />
                         </span>
-                      </nuxt-link>
+                      </router-link>
 
-                      <nuxt-link :to="{ path: '/admin/delete_page', query: { name: item.name }}" class="level-item" aria-label="delete">
+                      <router-link :to="{ path: '/admin/delete_page', query: { name: item.name }}" class="level-item" aria-label="delete">
                         <span class="icon is-small">
                           <font-awesome-icon icon="fa-solid fa-trash" />
                         </span>
-                      </nuxt-link>
+                      </router-link>
                     </div>
                   </nav>
                 </td>
@@ -74,7 +74,8 @@
 </template>
 
 <script>
-  import Pagination from '~/components/Pagination';
+  import Notification from '~/components/Notification.vue';
+  import Pagination from '~/components/Pagination.vue';
 
   export default {
 
@@ -83,8 +84,6 @@
         Pagination,
     },
 
-    layout: 'admin',
-    middleware: 'auth-admin',
 
     data() {
       return {
@@ -130,3 +129,7 @@
 
   };
 </script>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

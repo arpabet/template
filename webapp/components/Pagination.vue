@@ -44,14 +44,15 @@ export default {
       size: 0
     }
   },
+  watch: {
+    // Re-paginate when props change from asynchronous operations.
+    current: 'paginate',
+    total: 'paginate',
+    itemsPerPage: 'paginate',
+    step: 'paginate'
+  },
   mounted () {
     this.paginate()
-    // Check for changes in props resulting from asynchronous operations
-    Object.keys(this._props).forEach(event => {
-      this.$watch(event, (val, oldVal) => {
-        this.paginate()
-      });
-    })
   },
   methods: {
     add (s, f) {

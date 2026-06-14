@@ -3,7 +3,7 @@
     <div class="column is-6">
 
       <Notification v-if="error" :message="error" @close="error=null"/>
-      <FetchNotification :fetchState="$fetchState" />
+      <FetchNotification :fetchState="loadState" />
 
       <form method="post" autocomplete="off" @submit.prevent="updateUser">
 
@@ -71,9 +71,6 @@ export default {
       Notification,
   },
 
-  layout: 'admin',
-  middleware: 'auth-admin',
-
   data() {
     return {
       userId: '',
@@ -83,28 +80,40 @@ export default {
       role: '',
       createdAt: 0,
       error: null,
+      loadState: { pending: false, error: null },
     };
   },
 
-  async fetch() {
-    const params = this.$route.query
-    this.userId = params.id
-    const res = await this.$axios.get('/api/admin/users/' + params.id);
-    if (res.status === 200) {
-      this.userId = res.data.id
-      this.username = res.data.username
-      this.email = res.data.email
-      this.fullName = res.data.full_name
-      this.role = res.data.role
-      this.createdAt = res.data.created_at
-    }
+  created() {
+    this.loadUser()
   },
 
   watch: {
-    '$route.query': '$fetch'
+    '$route.query': 'loadUser'
   },
 
   methods: {
+    async loadUser() {
+      this.loadState.pending = true
+      this.loadState.error = null
+      try {
+        const params = this.$route.query
+        this.userId = params.id
+        const res = await this.$axios.get('/api/admin/users/' + params.id);
+        if (res.status === 200) {
+          this.userId = res.data.id
+          this.username = res.data.username
+          this.email = res.data.email
+          this.fullName = res.data.full_name
+          this.role = res.data.role
+          this.createdAt = res.data.created_at
+        }
+      } catch (e) {
+        this.loadState.error = e
+      } finally {
+        this.loadState.pending = false
+      }
+    },
     async updateUser() {
       try {
         await this.$axios.put('/api/admin/users/' + this.userId, {
@@ -126,3 +135,7 @@ export default {
 </script>
 
 
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

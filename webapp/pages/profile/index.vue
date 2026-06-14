@@ -55,18 +55,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
-  middleware: 'auth',
-
   computed: {
-    ...mapGetters(['loggedInUser']),
+    loggedInUser() {
+      return this.$auth.loggedInUser;
+    },
   },
 
   methods: {
     refreshTokens() {
-      console.log(this.$auth)
       this.$auth.refreshTokens()
     },
     deleteUser() {
@@ -76,3 +73,7 @@ export default {
 
 };
 </script>
+
+<route>
+{ meta: { middleware: "auth" } }
+</route>

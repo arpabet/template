@@ -16,9 +16,9 @@
       <div id="navbarBasic" class="navbar-menu" :class="{'is-active' : activeBurger}">
 
         <div class="navbar-start">
-          <nuxt-link class="navbar-item" to="/">
+          <router-link class="navbar-item" to="/">
             Home
-          </nuxt-link>
+          </router-link>
         </div>
 
 
@@ -28,21 +28,21 @@
               <small>{{ loggedInUser.first_name }}</small>
             </a>
             <div id="navbarUser" class="navbar-dropdown is-right">
-              <nuxt-link class="navbar-item" to="/profile/">My Profile</nuxt-link>
-              <nuxt-link class="navbar-item" to="/auth/security_log">Security</nuxt-link>
-              <nuxt-link v-if="loggedInUser.role == 'ADMIN'" class="navbar-item" to="/admin/">Admin Dashboard</nuxt-link>
+              <router-link class="navbar-item" to="/profile">My Profile</router-link>
+              <router-link class="navbar-item" to="/auth/security_log">Security</router-link>
+              <router-link v-if="loggedInUser.role == 'ADMIN'" class="navbar-item" to="/admin">Admin Dashboard</router-link>
               <hr class="navbar-divider">
               <a class="navbar-item" @click="logout">Logout</a>
             </div>
           </div>
           <div v-else class="navbar-item">
             <div class="buttons">
-              <nuxt-link class="button is-danger" to="/auth/register">
+              <router-link class="button is-danger" to="/auth/register">
                 <strong>Sign Up</strong>
-              </nuxt-link>
-              <nuxt-link class="button is-light" to="/auth/login">
+              </router-link>
+              <router-link class="button is-light" to="/auth/login">
                 <span>Sign in</span><font-awesome-icon icon="fa-solid fa-circle-right" class="ml-2" />
-              </nuxt-link>
+              </router-link>
             </div>
           </div>
         </div>
@@ -53,8 +53,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 
   props: {
@@ -71,12 +69,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser']),
+    isAuthenticated() {
+      return this.$auth.isAuthenticated;
+    },
+    loggedInUser() {
+      return this.$auth.loggedInUser;
+    },
   },
 
   methods: {
     async logout() {
       await this.$auth.logout();
+      this.$router.push('/');
     },
     toggleBurger() {
       this.activeBurger = !this.activeBurger

@@ -42,13 +42,13 @@
 
           <div class="has-text-centered" style="margin-top: 20px">
             <p>
-              Don't have an account? <nuxt-link to="/auth/register">Register</nuxt-link>
+              Don't have an account? <router-link to="/auth/register">Register</router-link>
             </p>
           </div>
 
           <div class="has-text-centered" style="margin-top: 20px">
             <p>
-              Forgot password? <nuxt-link to="/auth/restore_password">Restore</nuxt-link>
+              Forgot password? <router-link to="/auth/restore_password">Restore</router-link>
             </p>
           </div>
 
@@ -67,7 +67,6 @@ export default {
     Notification,
   },
 
-  middleware: 'guest',
 
   data() {
     return {
@@ -103,3 +102,7 @@ export default {
   }
 </style>
 
+
+<route>
+{ meta: { middleware: "guest" } }
+</route>

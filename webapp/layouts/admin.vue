@@ -11,25 +11,25 @@
                   General
                 </p>
                 <ul class="menu-list">
-                  <li><nuxt-link to="/admin/">Dashboard</nuxt-link></li>
-                  <li><nuxt-link to="/admin/users">Users</nuxt-link></li>
+                  <li><router-link to="/admin">Dashboard</router-link></li>
+                  <li><router-link to="/admin/users">Users</router-link></li>
                 </ul>
                 <p class="menu-label">
                   Administration
                 </p>
                 <ul class="menu-list">
-                  <li><nuxt-link to="/admin/pages">Pages</nuxt-link></li>
+                  <li><router-link to="/admin/pages">Pages</router-link></li>
                 </ul>
                 <p class="menu-label">
                   Statistics
                 </p>
                 <ul class="menu-list">
-                  <li><nuxt-link to="/admin/traffic">Traffic</nuxt-link></li>
+                  <li><router-link to="/admin/traffic">Traffic</router-link></li>
                 </ul>
               </aside>
            </div>
            <div class="column">
-              <nuxt/>
+              <slot/>
            </div>
         </div>
       </div>
@@ -40,8 +40,8 @@
 </template>
 
 <script>
-  import NavigationBar from '~/components/NavigationBar';
-  import Footer from '~/components/Footer';
+  import NavigationBar from '~/components/NavigationBar.vue';
+  import Footer from '~/components/Footer.vue';
 
   export default {
     components: {

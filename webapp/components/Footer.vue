@@ -9,11 +9,11 @@
       <div class="bd-footer-links">
         <div class="columns">
             <div class="column is-3 is-offset-4">
-              <p class="bd-footer-link-title"><nuxt-link class="navbar-item" to="/">Home</nuxt-link></p>
-              <p class="bd-footer-link"><nuxt-link class="navbar-item" :to="{ path: '/static', query: { page: 'about' }}">About</nuxt-link></p>
-              <p class="bd-footer-link"><nuxt-link class="navbar-item" :to="{ path: '/static', query: { page: 'terms_of_use' }}">Terms Of Use</nuxt-link></p>
-              <p class="bd-footer-link"><nuxt-link class="navbar-item" :to="{ path: '/static', query: { page: 'privacy' }}">Privacy</nuxt-link></p>
-              <p class="bd-footer-link"><nuxt-link class="navbar-item" :to="{ path: '/static', query: { page: 'cookie_policy' }}">Cookie Policy</nuxt-link></p>
+              <p class="bd-footer-link-title"><router-link class="navbar-item" to="/">Home</router-link></p>
+              <p class="bd-footer-link"><router-link class="navbar-item" :to="{ path: '/static', query: { page: 'about' }}">About</router-link></p>
+              <p class="bd-footer-link"><router-link class="navbar-item" :to="{ path: '/static', query: { page: 'terms_of_use' }}">Terms Of Use</router-link></p>
+              <p class="bd-footer-link"><router-link class="navbar-item" :to="{ path: '/static', query: { page: 'privacy' }}">Privacy</router-link></p>
+              <p class="bd-footer-link"><router-link class="navbar-item" :to="{ path: '/static', query: { page: 'cookie_policy' }}">Cookie Policy</router-link></p>
             </div>
             <div class="column is-3" style="text-align: left;">
               <p class="bd-footer-link-title"><span class="navbar-item">Share on social media</span></p>

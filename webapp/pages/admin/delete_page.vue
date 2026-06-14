@@ -16,7 +16,6 @@
           <div class="control">
             <button type="submit" class="button is-dark is-fullwidth" @click="deletePage">Delete</button>
           </div>
-        </form>
       </div>
    </div>
    </template>
@@ -30,8 +29,6 @@ export default {
         Notification,
     },
 
-    layout: 'admin',
-    middleware: 'auth-admin',
 
     data() {
       return {
@@ -77,3 +74,7 @@ export default {
 </script>
 
 
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

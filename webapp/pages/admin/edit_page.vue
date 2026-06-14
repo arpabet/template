@@ -97,8 +97,6 @@
           Notification,
       },
 
-      layout: 'admin',
-      middleware: 'auth-admin',
 
       data() {
         return {
@@ -170,3 +168,7 @@
    }
 
   </style>
+
+<route>
+{ meta: { layout: "admin", middleware: "auth-admin" } }
+</route>

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <cookie-consent class="notification is-warning" href="/static?page=cookie_policy" />
-    <NavigationBar :fixedTop="true"/>
-    <nuxt/>
-    <Footer/>
+    <CookieConsent class="notification is-warning" href="/static?page=cookie_policy" />
+    <NavigationBar :fixedTop="true" />
+    <slot />
+    <Footer />
   </div>
 </template>
 
 <script>
-import CookieConsent from 'vue-cookieconsent-component';
-import NavigationBar from '~/components/NavigationBar';
-import Footer from '~/components/Footer';
+import CookieConsent from '~/components/CookieConsent.vue';
+import NavigationBar from '~/components/NavigationBar.vue';
+import Footer from '~/components/Footer.vue';
 
 export default {
   components: {
@@ -18,10 +18,12 @@ export default {
     NavigationBar,
     Footer,
   },
-  head: {
-    bodyAttrs: {
-      class: 'has-navbar-fixed-top'
-    }
-  }
+  mounted() {
+    // The fixed-top navbar needs this class on <body> (was Nuxt head.bodyAttrs).
+    document.body.classList.add('has-navbar-fixed-top');
+  },
+  unmounted() {
+    document.body.classList.remove('has-navbar-fixed-top');
+  },
 };
 </script>
