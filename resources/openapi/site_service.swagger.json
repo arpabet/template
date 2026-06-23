@@ -147,23 +147,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                },
-                "contentType": {
-                  "type": "string",
-                  "title": "HTML or MARKDOWN"
-                },
-                "prev": {
-                  "type": "string",
-                  "title": "using for updating name"
-                }
-              }
+              "$ref": "#/definitions/SiteServiceAdminUpdatePageBody"
             }
           }
         ],
@@ -323,25 +307,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "fullName": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "int64"
-                }
-              }
+              "$ref": "#/definitions/SiteServiceAdminUpdateUserBody"
             }
           }
         ],
@@ -413,6 +379,46 @@
     }
   },
   "definitions": {
+    "SiteServiceAdminUpdatePageBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string",
+          "title": "HTML or MARKDOWN"
+        },
+        "prev": {
+          "type": "string",
+          "title": "using for updating name"
+        }
+      }
+    },
+    "SiteServiceAdminUpdateUserBody": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
     "lighttemplateAdminPage": {
       "type": "object",
       "properties": {

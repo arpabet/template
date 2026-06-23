@@ -8,12 +8,12 @@ require (
 	github.com/stretchr/testify v1.11.1
 	go.arpabet.com/glue v1.5.1
 	go.arpabet.com/go-bindata v1.1.0
+	go.arpabet.com/sprint v1.2.0
 	go.arpabet.com/sprint/certmod v1.2.0
 	go.arpabet.com/sprint/dnsmod v1.2.0
+	go.arpabet.com/sprint/framework v1.2.0
 	go.arpabet.com/sprint/natmod v1.2.0
 	go.arpabet.com/sprint/sealmod v1.2.0
-	go.arpabet.com/sprint/sprint v1.1.0
-	go.arpabet.com/sprint/sprintframework v1.1.0
 	go.arpabet.com/store v1.3.1
 	go.arpabet.com/store/providers/badger v1.3.1
 	go.uber.org/atomic v1.11.0
@@ -68,7 +68,6 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	go.arpabet.com/base62 v1.2.1 // indirect
 	go.arpabet.com/properties v1.1.0 // indirect
-	go.arpabet.com/sprint v1.2.0 // indirect
 	go.arpabet.com/sprint/cert v1.2.0 // indirect
 	go.arpabet.com/sprint/certpb v1.2.0 // indirect
 	go.arpabet.com/sprint/dns v1.2.0 // indirect

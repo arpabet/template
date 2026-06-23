@@ -8,10 +8,10 @@ package server
 import (
 	"context"
 	"fmt"
-	"go.arpabet.com/sprint/sprintframework/sprintutils"
+	"go.arpabet.com/sprint/framework/sprintutils"
 	"go.arpabet.com/template/pkg/pb"
 	"go.arpabet.com/template/pkg/service"
-	"go.arpabet.com/sprint/sprint"
+	"go.arpabet.com/sprint"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

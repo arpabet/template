@@ -14,7 +14,7 @@ import (
 	"go.arpabet.com/template/pkg/api"
 	"go.arpabet.com/template/pkg/pb"
 	"go.arpabet.com/template/pkg/service"
-	"go.arpabet.com/sprint/sprintframework/sprintcore"
+	"go.arpabet.com/sprint/framework/sprintcore"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 	"os"

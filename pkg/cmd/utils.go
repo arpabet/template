@@ -8,7 +8,7 @@ package cmd
 import (
 	"go.arpabet.com/glue"
 	"golang.org/x/xerrors"
-	"go.arpabet.com/sprint/sprint"
+	"go.arpabet.com/sprint"
 	"go.arpabet.com/template/pkg/api"
 	"reflect"
 )
