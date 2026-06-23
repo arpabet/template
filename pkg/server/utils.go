@@ -8,7 +8,7 @@ package server
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/template/pkg/pb"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
@@ -95,7 +95,7 @@ func (t *implUIGrpcServer) wrapError(err error, method, username string) error {
 	issue := err.Error()
 	if strings.HasPrefix(issue, "nowrap:") {
 		issue = strings.TrimSpace(strings.TrimPrefix(issue, "nowrap:"))
-		return errors.New(issue)
+		return xerrors.New(issue)
 	}
 	message := "internal error"
 	if strings.Contains("concurrent transaction", issue) {

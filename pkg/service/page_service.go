@@ -8,7 +8,7 @@ package service
 import (
 	"context"
 	"go.arpabet.com/store"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/template/pkg/api"
 	"go.arpabet.com/template/pkg/pb"
 	"go.arpabet.com/template/pkg/utils"
@@ -32,7 +32,7 @@ func (t *implPageService) GetPage(ctx context.Context, name string) (*pb.PageEnt
 
 	name = utils.NormalizePageId(name)
 	if name == "" {
-		return nil, errors.New("page name is empty")
+		return nil, xerrors.New("page name is empty")
 	}
 
 	page := new(pb.PageEntity)
@@ -58,7 +58,7 @@ func (t *implPageService) CreatePage(ctx context.Context, newPage *pb.AdminPage)
 
 	newPage.Name = utils.NormalizePageId(newPage.Name)
 	if newPage.Name == "" {
-		return errors.New("new page name is empty")
+		return xerrors.New("new page name is empty")
 	}
 
 	ctx = t.TransactionalManager.BeginTransaction(ctx, false)
@@ -73,13 +73,13 @@ func (t *implPageService) CreatePage(ctx context.Context, newPage *pb.AdminPage)
 	}
 
 	if entity.Name != "" {
-		err = errors.Errorf("nowrap: page '%s' already exist", newPage.Name)
+		err = xerrors.Errorf("nowrap: page '%s' already exist", newPage.Name)
 		return
 	}
 
 	contentType, err := t.parseContentType(newPage.ContentType)
 	if err != nil {
-		err = errors.Errorf("nowrap: invalid content type '%s'", newPage.ContentType)
+		err = xerrors.Errorf("nowrap: invalid content type '%s'", newPage.ContentType)
 	}
 
 	entity = &pb.PageEntity{
@@ -99,7 +99,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 
 	updatingPage.Name = utils.NormalizePageId(updatingPage.Name)
 	if updatingPage.Name == "" {
-		return errors.New("updating page name is empty")
+		return xerrors.New("updating page name is empty")
 	}
 
 	ctx = t.TransactionalManager.BeginTransaction(ctx, false)
@@ -116,7 +116,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 		}
 
 		if entity.Name != "" {
-			err = errors.Errorf("nowrap: page '%s' already exist", updatingPage.Name)
+			err = xerrors.Errorf("nowrap: page '%s' already exist", updatingPage.Name)
 			return
 		}
 
@@ -129,7 +129,7 @@ func (t *implPageService) UpdatePage(ctx context.Context, updatingPage *pb.Admin
 
 	contentType, err := t.parseContentType(updatingPage.ContentType)
 	if err != nil {
-		err = errors.Errorf("nowrap: invalid content type '%s'", updatingPage.ContentType)
+		err = xerrors.Errorf("nowrap: invalid content type '%s'", updatingPage.ContentType)
 	}
 
 	entity := &pb.PageEntity{
@@ -149,7 +149,7 @@ func (t *implPageService) RemovePage(ctx context.Context, name string) error {
 
 	name = utils.NormalizePageId(name)
 	if name == "" {
-		return errors.New("page name is empty")
+		return xerrors.New("page name is empty")
 	}
 
 	return t.HostStore.Remove(ctx).ByKey("page:%s", name).Do()
@@ -179,7 +179,7 @@ func (t *implPageService) parseContentType(ct string) (pb.ContentType, error) {
 	case "HTML":
 		contentType = pb.ContentType_HTML
 	default:
-		return 0, errors.Errorf("invalid content type '%s'", ct)
+		return 0, xerrors.Errorf("invalid content type '%s'", ct)
 	}
 	return contentType, nil
 }

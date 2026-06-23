@@ -5,21 +5,21 @@
 
 package service
 
-import "github.com/pkg/errors"
+import "golang.org/x/xerrors"
 
 var (
 
-	ErrNotImplemented = errors.New("not implemented")
+	ErrNotImplemented = xerrors.New("not implemented")
 
-	ErrIntegrityDB = errors.New("db integrity")
+	ErrIntegrityDB = xerrors.New("db integrity")
 
-	ErrUserAlreadyExist = errors.New("user already exist")
-	ErrUserNotFound = errors.New("user not found")
-	ErrUserInvalidPassword = errors.New("wrong password")
+	ErrUserAlreadyExist = xerrors.New("user already exist")
+	ErrUserNotFound = xerrors.New("user not found")
+	ErrUserInvalidPassword = xerrors.New("wrong password")
 
-	ErrInvalidRecoverCode = errors.New("invalid recover code")
+	ErrInvalidRecoverCode = xerrors.New("invalid recover code")
 
-	ErrPageNotFound = errors.New("page not found")
+	ErrPageNotFound = xerrors.New("page not found")
 )
 
 

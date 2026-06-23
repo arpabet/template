@@ -10,7 +10,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/gomarkdown/markdown"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/store"
 	"go.arpabet.com/glue"
 	"go.arpabet.com/template/pkg/api"
@@ -100,7 +100,7 @@ func (t *implUIGrpcServer) PostConstruct() (err error) {
 	opts = append(opts, grpc.WithTransportCredentials(tlsCredentials))
 
 	if t.GrpcAddress == "" {
-		return errors.New("property 'control-grpc-server.bind-address' is empty")
+		return xerrors.New("property 'control-grpc-server.bind-address' is empty")
 	}
 
 	pb.RegisterAuthServiceHandlerFromEndpoint(context.Background(), api, t.GrpcAddress, opts)

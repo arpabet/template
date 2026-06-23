@@ -8,7 +8,7 @@ package server
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/template/pkg/pb"
 	"go.arpabet.com/template/pkg/service"
 	"google.golang.org/grpc/codes"
@@ -92,7 +92,7 @@ func (t *implUIGrpcServer) parseContentType(ct string) (pb.ContentType, error) {
 	case "HTML":
 		contentType = pb.ContentType_HTML
 	default:
-		return 0, errors.Errorf("invalid content type '%s'", ct)
+		return 0, xerrors.Errorf("invalid content type '%s'", ct)
 	}
 	return contentType, nil
 }

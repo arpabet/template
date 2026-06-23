@@ -7,7 +7,7 @@ package cmd
 
 import (
 	"go.arpabet.com/glue"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/sprint/sprint"
 	"go.arpabet.com/template/pkg/api"
 	"reflect"
@@ -20,7 +20,7 @@ func doWithAdminClient(parent glue.Container, cb func(client api.AdminClient) er
 		if client, ok := instance.(api.AdminClient); ok {
 			return cb(client)
 		} else {
-			return errors.Errorf("invalid object '%v' found instead of api.AdminClient in client context: ", reflect.TypeOf(instance))
+			return xerrors.Errorf("invalid object '%v' found instead of api.AdminClient in client context: ", reflect.TypeOf(instance))
 		}
 
 	})

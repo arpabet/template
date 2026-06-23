@@ -5,7 +5,6 @@ go 1.25.0
 require (
 	github.com/gomarkdown/markdown v0.0.0-20220905174103-7b278df48cfb
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
-	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
 	go.arpabet.com/glue v1.5.0
 	go.arpabet.com/go-bindata v1.1.0
@@ -20,6 +19,7 @@ require (
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.28.0
 	golang.org/x/crypto v0.28.0
+	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da
 	google.golang.org/genproto v0.0.0-20230303212802-e74f57abe488
 	google.golang.org/grpc v1.53.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
@@ -60,6 +60,7 @@ require (
 	github.com/miekg/dns v1.1.50 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect

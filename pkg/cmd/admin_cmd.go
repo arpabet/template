@@ -8,7 +8,7 @@ package cmd
 import (
 	"fmt"
 	"go.arpabet.com/glue"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/sprint/sprint"
 	"go.arpabet.com/template/pkg/api"
 	"strings"
@@ -52,7 +52,7 @@ func (t *implAdminCommand) Synopsis() string {
 
 func (t *implAdminCommand) Run(args []string) error {
 	if len(args) == 0 {
-		return errors.Errorf("invalid argument, %s", t.Synopsis())
+		return xerrors.Errorf("invalid argument, %s", t.Synopsis())
 	}
 	cmd := args[0]
 	args = args[1:]

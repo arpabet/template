@@ -7,7 +7,7 @@ package service
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"golang.org/x/xerrors"
 	"go.arpabet.com/store"
 	"go.arpabet.com/template/pkg/api"
 	"go.arpabet.com/template/pkg/pb"
@@ -38,7 +38,7 @@ func (t *implSecurityLogService) LogEvent(ctx context.Context, userId, eventName
 
 	userId = utils.NormalizeUserId(userId)
 	if userId == "" {
-		return errors.New("userId is empty")
+		return xerrors.New("userId is empty")
 	}
 
 	ctx = t.TransactionalManager.BeginTransaction(ctx, false)
@@ -82,7 +82,7 @@ func (t *implSecurityLogService) EnumEvents(ctx context.Context, userId string, 
 
 	userId = utils.NormalizeUserId(userId)
 	if userId == "" {
-		return errors.New("userId is empty")
+		return xerrors.New("userId is empty")
 	}
 
 	return t.HostStorage.Enumerate(ctx).ByPrefix("%s:user:security-log:", userId).
